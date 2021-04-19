@@ -1,1 +1,1 @@
-# wav-ddr-hw
+# wav-lpddr-hw
