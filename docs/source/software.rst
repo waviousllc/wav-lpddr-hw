@@ -60,14 +60,16 @@ Messages from HOST to MCU
 +++++++++++++++++++++++++
 
 .. table::
-  :widths: 20 20 20 40 20
+  :widths: 20 20 20 80
 
-  ================= ================= ================= ======================================== ========================
-  Name              HOST2MCU_MSG_ID   HOST2MCU_MSG_DATA Description                              Response HOST2MCU_MSG_ID
-  ================= ================= ================= ======================================== ========================
-  SW-version-req    0x2               N/A               Report SW version                        0x2
-  BOOT-start        0x3               N/A               Start Booting Process                    0x3
-  ================= ================= ================= ======================================== ========================
+  ============================= ================= ================= ========================================
+  Name                          HOST2MCU_MSG_ID   HOST2MCU_MSG_DATA Description
+  ============================= ================= ================= ========================================
+  N/A                           0x0               N/A               Intentionally ommitted message
+  Firmware Version Request      0x2               N/A               HOST is requesting Firmware version
+  Hardware Version Request      0x4               N/A               HOST is requesting HW version
+  MCU Boot Request              0x6               N/A               HOST is requesting to perform boot procedure
+  ============================= ================= ================= ========================================
 
 Messages from MCU to HOST
 +++++++++++++++++++++++++
@@ -75,15 +77,14 @@ Messages from MCU to HOST
 .. table::
   :widths: 20 20 20 80
 
-  ================= ================= ================= ========================================
-  Name              MCU2HOST_MSG_ID   MCU2HOST_MSG_DATA Description
-  ================= ================= ================= ========================================
-  SW-ready          0x1               N/A               MCU indicates to HOST that SW is initialized and ready to accept messages
-  SW-version-rsp    0x2               $version          MCU will return SW $version currentlly running on MCU
-  BOOT-done         0x3               $return           MCU will send this message to indicate
-                                                        $return = 0, boot completed with sucsess,
-                                                        $return = err, boot completed with error
-  ================= ================= ================= ========================================
+  ================================= ================= ================= ========================================
+  Name                              MCU2HOST_MSG_ID   MCU2HOST_MSG_DATA Description
+  ================================= ================= ================= ========================================
+  Message Interface Ready Response  0x1               N/A               MCU indicates messaging interface is ready to be used
+  Firmware Version Response         0x3               $version          MCU is returning Firmware $version currentlly running on MCU
+  Hardware Version Response         0x5               $version          MCU is returning HW $version
+  MCU Boot Response                 0x7               $ret              MCU is responding boot has been complete ($ret = 0x0, SUCCESS; $ret = 0x1, FAILED)
+  ================================= ================= ================= ========================================
 
 Boot procedure (from HOST level)
 --------------------------------
@@ -94,7 +95,9 @@ The boot procedure is listed in the order below:
 #. Move ITCM image to ITCM address ``0x10000``.
 #. Move DTCM image to DTCM address ``0x50000``.
 #. Enable MCU by setting ``FETCH_EN=0x1`` within ``WAV_MCU__MCUTOP__CFG``.
-#. Wait until mesage SW-ready is received.
-#. If desired, send SW-version-req message and wait for MCU to report SW-version-rsp.
-#. Send BOOT-start message to MCU.
-#. Wait till Boot-done message is received.
+#. Wait until mesage ``Message Interface Ready Response`` is received.
+#. If desired, send ``Firmware/HW Version Request`` message and wait for MCU to respond.
+#. Send ``MCU Boot Request`` message to MCU.
+#. Wait till ``MCU Boot Response`` message is received.
+
+Note, with current version of Firmware, MCU is performing boot automatically and messaging is not supported.
