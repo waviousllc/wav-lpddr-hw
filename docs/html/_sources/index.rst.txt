@@ -17,6 +17,7 @@ WDDR Documentation
    integration
    software
    regs
+   verif
    license
    help
 
