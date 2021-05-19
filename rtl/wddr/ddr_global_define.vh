@@ -1,26 +1,21 @@
-/****************************************************************************
-*****************************************************************************
-** Wavious LLC Proprietary
-**
-** Copyright (c) 2019 Wavious LLC. All rights reserved.
-**
-** All data and information contained in or disclosed by this document
-** are confidential and proprietary information of Wavious LLC,
-** and all rights therein are expressly reserved. By accepting this
-** material, the recipient agrees that this material and the information
-** contained therein are held in confidence and in trust and will not be
-** used, copied, reproduced in whole or in part, nor its contents
-** revealed in any manner to others without the express written
-** permission of Wavious LLC.
-*****************************************************************************
-*
-* Module    : ddr_global_defines.vh
-* Date      : 2019-11-17
-* Desciption: DDR Global Defines
-*
-* $Id: ddr_global_define.vh,v 1.81 2021/04/23 22:16:09 mclovis Exp $
-*
-****************************************************************************/
+
+/*********************************************************************************
+Copyright (c) 2021 Wavious LLC
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+*********************************************************************************/
 
 // ------------------------------------------------------------------------
 // Synthesis Defines
