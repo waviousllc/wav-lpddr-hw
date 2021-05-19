@@ -23,7 +23,7 @@ Features
 
 Tools Required
 --------------
-The WDDR UVM testbench has been developed with Cadence VIP and simulators. Users must encuse that IP and tools have been installed.
+The WDDR UVM testbench has been developed with Cadence VIP and simulators. Users must ensure that the VIP and tools have been installed properly.
 
 Run your first sim
 ------------------
