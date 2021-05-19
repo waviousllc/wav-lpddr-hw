@@ -25,11 +25,19 @@ Tools Required
 --------------
 The WDDR UVM testbench has been developed with Cadence VIP and simulators. Users must ensure that the VIP and tools have been installed properly.
 
-Run your first sim
-------------------
-Ensure that Cadence VIPs and Xcelium (20.09.003) are installed. Update verif/run/simulate.sh variables are needed.
+Simulations without VIP
+-----------------------
+The testbench can be run without VIP models for the Memory Controller and LPDDR DRAM to test basic functionality. Two tests have been provided.
+
+* MCU boot test @422Mhz.
+* Sanity ddr loopback test @2112Mhz.
+
+Run your first sims
+-------------------
+Ensure that Cadence Xcelium (20.09.003) is installed. Update verif/run/simulate.sh variables as needed.
 
 ::
 
   cd verif/run
-  ./simulate.sh
+  ./simulate.sh -t wddr_dt_mcuboot_test -sw "RAMFILE_DIR_WDDR_BOOT"
+  ./simulate.sh -t wddr_dt_ddr_test -e "+MVP_FORCE_PLL +vcoFreq1=2112 +gb=2 +freqRatio=2" -timeout 10000000
