@@ -1,21 +1,3 @@
-/*********************************************************************************
-Copyright (c) 2021 Wavious LLC
-
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
-*********************************************************************************/
-
 // Copyright lowRISC contributors.
 // Copyright 2018 ETH Zurich and University of Bologna, see also CREDITS.md.
 // Licensed under the Apache License, Version 2.0, see LICENSE for details.
@@ -41,14 +23,12 @@ module ibex_prefetch_buffer #(
     input  logic        branch_mispredict_i,
     input  logic [31:0] addr_i,
 
-
     input  logic        ready_i,
     output logic        valid_o,
     output logic [31:0] rdata_o,
     output logic [31:0] addr_o,
     output logic        err_o,
     output logic        err_plus2_o,
-
 
     // goes to instruction memory / instruction cache
     output logic        instr_req_o,
