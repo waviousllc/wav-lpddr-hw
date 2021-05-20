@@ -6,7 +6,7 @@ https://github.com/waviousllc/wav-lpddr-hw
 WDDR PHY
 ========
 The Wavious DDR (WDDR) Physical interface (PHY) is designed to be a scalable DDR PHY IP that meets high performance, low area, and low power
-requirements across multiple JEDEC DRAM protocols. Initially targeting LPDDR4x and LPDDR5, the WDDR PHY supports LPDDR JEDEC protocols and a DFIv5
+requirements across multiple JEDEC DRAM protocols. Initially targeting LPDDR4x and LPDDR5, the WDDR PHY supports JEDEC LPDDR protocols and a DFIv5
 compliant interface.
 
 Features
@@ -39,7 +39,7 @@ The testbench can be run without VIP models for the Memory Controller and LPDDR 
 
 Run your first sims
 -------------------
-Ensure that Cadence Xcelium (20.09.003) is installed. Update verif/run/simulate.sh variables as needed.
+Ensure that Cadence Xcelium simulator (v20.09.003) is installed. Update verif/run/simulate.sh variables as needed.
 
 ::
 

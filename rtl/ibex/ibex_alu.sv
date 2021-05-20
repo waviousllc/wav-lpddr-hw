@@ -1,21 +1,3 @@
-/*********************************************************************************
-Copyright (c) 2021 Wavious LLC
-
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
-*********************************************************************************/
-
 // Copyright lowRISC contributors.
 // Copyright 2018 ETH Zurich and University of Bologna, see also CREDITS.md.
 // Licensed under the Apache License, Version 2.0, see LICENSE for details.
@@ -427,7 +409,6 @@ module ibex_alu #(
     logic [ 5:0] bitcnt_partial [32];
     logic [31:0] bitcnt_partial_lsb_d;
     logic [31:0] bitcnt_partial_msb_d;
-
 
     assign bitcnt_ctz    = operator_i == ALU_CTZ;
     assign bitcnt_clz    = operator_i == ALU_CLZ;
@@ -1181,7 +1162,6 @@ module ibex_alu #(
         end
       endcase
     end
-
 
   end else begin : g_no_alu_rvb
     logic [31:0] unused_imd_val_q[2];
