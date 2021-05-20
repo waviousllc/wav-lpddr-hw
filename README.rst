@@ -21,6 +21,11 @@ Features
 * Embedded high-performance and low jitter PLL
 * Per-bit deskew
 
+Software
+++++++++
+The Software for Wavious DDR is located here:
+https://github.com/waviousllc/wav-lpddr-sw. Software binaries are compiled and converted to ramfiles, located at ./sw directory.
+
 Tools Required
 --------------
 The WDDR UVM testbench has been developed with Cadence VIP and simulators. Users must ensure that the VIP and tools have been installed properly.
