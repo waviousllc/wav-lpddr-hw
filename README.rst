@@ -23,7 +23,7 @@ Features
 
 Software
 ++++++++
-The Software for Wavious DDR is located here:
+The Software for Wavious DDR is located here (not released yet; however, is expected to be release soon):
 https://github.com/waviousllc/wav-lpddr-sw. Software binaries are compiled and converted to ramfiles, located at ./sw directory.
 
 Tools Required
