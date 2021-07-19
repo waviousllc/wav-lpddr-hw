@@ -1,4 +1,4 @@
-rtl
+./rtl
 |-- ahb
 |   |-- wav_ahb.sv
 |   `-- wav_ahb_pkg.sv
@@ -17,6 +17,7 @@ rtl
 |   |-- wphy_clk_div_4ph_10g_dlymatch_svt.sv
 |   |-- wphy_clk_div_4ph_10g_svt.sv
 |   |-- wphy_clkmux_3to1_diff.sv
+|   |-- wphy_clkmux_3to1_diff_slvt.sv
 |   |-- wphy_clkmux_diff.sv
 |   |-- wphy_gfcm_lvt.sv
 |   |-- wphy_gfcm_svt.sv
@@ -86,6 +87,7 @@ rtl
 |-- pll_shared
 |   `-- wav_pll_shared_lib.v
 |-- tech
+    |-- ddr_custom_lib.sv
 |   |-- ddr_stdcell_lib.sv
 |   |-- wav_legacy_stdcell_lib.v
 |   |-- wav_stdcell_lib.sv
@@ -116,7 +118,6 @@ rtl
     |-- ddr_ctrl_csr.sv
     |-- ddr_ctrl_csr_defs.vh
     |-- ddr_ctrl_plane.sv
-    |-- ddr_custom_lib.sv
     |-- ddr_dfi.sv
     |-- ddr_dfi_ahb_csr.sv
     |-- ddr_dfi_csr.sv

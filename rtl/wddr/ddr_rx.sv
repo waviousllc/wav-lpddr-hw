@@ -2,18 +2,17 @@
 /*********************************************************************************
 Copyright (c) 2021 Wavious LLC
 
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
 
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+    http://www.apache.org/licenses/LICENSE-2.0
 
-You should have received a copy of the GNU General Public License
-along with this program.  If not, see <http://www.gnu.org/licenses/>.
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
 
 *********************************************************************************/
 
@@ -100,8 +99,13 @@ module ddr_rx #(
       .PAD_MASK         (PAD_MASK),
       .SE_PAD           (SE_PAD)
    ) u_rx_ana (
+`ifdef DDR_ECO_CM_RX_CLK
+      .i_rdqs_clk_0     (i_rdqs_clk_0),
+      .i_rdqs_clk_180   (i_rdqs_clk_180),
+`else
       .i_rdqs_clk_0     (rdqs_clk_0),
       .i_rdqs_clk_180   (rdqs_clk_180),
+`endif
 
       .ana_vref         (ana_vref),
       .i_sa_cmn_en      (i_sa_cmn_en),
@@ -1063,6 +1067,8 @@ module ddr_rx_cc #(
      endgenerate
 
 
+   generate
+   if (CA_TYPE) begin : CA_MUX  // High speed clock mux
    ddr_clkmux_3to1_diff_wrapper
      u_clkmux_diff_wrapper (
       .o_c           (mux_rdqs_clk_180),
@@ -1075,23 +1081,63 @@ module ddr_rx_cc #(
       .i_11_t        (pi_rdqs_clk_0),
       .i_sel         ({rdqs_mode_n, wck_mode_n})
    );
-
    ddr_wcm_bufx8 u_rdqs_clk_0_buf   (.i_a(mux_rdqs_clk_0),   .o_z(o_rdqs_clk_0));
    ddr_wcm_bufx8 u_rdqs_clk_180_buf (.i_a(mux_rdqs_clk_180), .o_z(o_rdqs_clk_180));
+   end else begin : DQ_MUX
+`ifdef DDR_ECO_CM_RX_CLK
+   ddr_clkmux_3to1_diff_wrapper # (
+     .SLVT_TYPE (1)
+   )  u_clkmux_diff_wrapper (
+      .o_c           (o_rdqs_clk_180),
+      .o_t           (o_rdqs_clk_0),
+`else
+   ddr_clkmux_3to1_diff_wrapper
+      u_clkmux_diff_wrapper (
+      .o_c           (mux_rdqs_clk_180),
+      .o_t           (mux_rdqs_clk_0),
+`endif
+      .i_01_c        (i_rdqs_b),
+      .i_01_t        (i_rdqs),
+      .i_10_c        (i_wck_b),
+      .i_10_t        (i_wck),
+      .i_11_c        (pi_rdqs_clk_180),
+      .i_11_t        (pi_rdqs_clk_0),
+      .i_sel         ({rdqs_mode_n, wck_mode_n})
+   );
+`ifndef DDR_ECO_CM_RX_CLK
+   ddr_wcm_bufx8 u_rdqs_clk_0_buf   (.i_a(mux_rdqs_clk_0),   .o_z(o_rdqs_clk_0));
+   ddr_wcm_bufx8 u_rdqs_clk_180_buf (.i_a(mux_rdqs_clk_180), .o_z(o_rdqs_clk_180));
+`endif
+   end
+   endgenerate
 
    // Preamble filter
    logic ren_inv;
    ddr_wcm_inv u_ren_inv (.i_a(ren), .o_z(ren_inv));
 
    logic filter_q0, filter_q1;
+   generate
+   if (CA_TYPE) begin : CA_FILTER
    ddr_wcm_dff_r u_filter_dff0 (.i_clk(mux_rdqs_clk_180), .i_clk_b(mux_rdqs_clk_0), .i_rst(ren_inv), .i_d(1'b1     ), .o_q(filter_q0));
    ddr_wcm_dff_r u_filter_dff1 (.i_clk(mux_rdqs_clk_180), .i_clk_b(mux_rdqs_clk_0), .i_rst(ren_inv), .i_d(filter_q0), .o_q(filter_q1));
+   end else begin :  DQ_FILTER
+`ifdef DDR_ECO_CM_RX_CLK
+   ddr_wcm_dff_r u_filter_dff0 (.i_clk(o_rdqs_clk_180), .i_clk_b(o_rdqs_clk_0), .i_rst(ren_inv), .i_d(1'b1     ), .o_q(filter_q0));
+   ddr_wcm_dff_r u_filter_dff1 (.i_clk(o_rdqs_clk_180), .i_clk_b(o_rdqs_clk_0), .i_rst(ren_inv), .i_d(filter_q0), .o_q(filter_q1));
+`else
+   ddr_wcm_dff_r u_filter_dff0 (.i_clk(mux_rdqs_clk_180), .i_clk_b(mux_rdqs_clk_0), .i_rst(ren_inv), .i_d(1'b1     ), .o_q(filter_q0));
+   ddr_wcm_dff_r u_filter_dff1 (.i_clk(mux_rdqs_clk_180), .i_clk_b(mux_rdqs_clk_0), .i_rst(ren_inv), .i_d(filter_q0), .o_q(filter_q1));
+`endif
+   end
+   endgenerate
 
    logic filter_mux0, filter_mux1;
    ddr_wcm_mux u_filter_mux0 (.i_sel(i_pre_filter_sel[0]), .i_a(ren), .i_b(filter_q0), .o_z(filter_mux0));
    ddr_wcm_mux u_filter_mux1 (.i_sel(i_pre_filter_sel[1]), .i_a(filter_mux0), .i_b(filter_q1), .o_z(filter_mux1));
 
    logic rdqs_clk_180_filter, rdqs_clk_180_filter_b;
+   generate
+   if (CA_TYPE) begin : CA_FILTER_CGC
    ddr_wcm_cgc_rh_2ph u_cgc_rdqs_filter (
       .i_clk         (mux_rdqs_clk_180),
       .i_clk_b       (mux_rdqs_clk_0),
@@ -1099,6 +1145,26 @@ module ddr_rx_cc #(
       .o_clk         (rdqs_clk_180_filter),
       .o_clk_b       (rdqs_clk_180_filter_b)
    );
+   end else begin :  DQ_FILTER_CGC
+`ifdef DDR_ECO_CM_RX_CLK
+   ddr_wcm_cgc_rh_2ph u_cgc_rdqs_filter (
+      .i_clk         (o_rdqs_clk_180),
+      .i_clk_b       (o_rdqs_clk_0),
+      .i_en          (filter_mux1),
+      .o_clk         (rdqs_clk_180_filter),
+      .o_clk_b       (rdqs_clk_180_filter_b)
+   );
+`else
+   ddr_wcm_cgc_rh_2ph u_cgc_rdqs_filter (
+      .i_clk         (mux_rdqs_clk_180),
+      .i_clk_b       (mux_rdqs_clk_0),
+      .i_en          (filter_mux1),
+      .o_clk         (rdqs_clk_180_filter),
+      .o_clk_b       (rdqs_clk_180_filter_b)
+   );
+`endif
+   end
+   endgenerate
 
    // Various clocking options
    logic clk_inv_div_byp, clk_inv_div_byp_or, clk_inv_div_en_int, clk_inv_div_en;

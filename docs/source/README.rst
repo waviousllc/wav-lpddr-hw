@@ -1,6 +1,6 @@
 https://github.com/waviousllc/wav-lpddr-hw
 
-.. figure :: docs/source/wavious_logo.png
+.. figure :: wavious_logo.png
   :align:    center
 
 WDDR PHY

@@ -2,18 +2,17 @@
 /*********************************************************************************
 Copyright (c) 2021 Wavious LLC
 
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
 
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+    http://www.apache.org/licenses/LICENSE-2.0
 
-You should have received a copy of the GNU General Public License
-along with this program.  If not, see <http://www.gnu.org/licenses/>.
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
 
 *********************************************************************************/
 
@@ -854,9 +853,8 @@ module ddr_demet #(
    output logic [DWIDTH-1:0] o_q
 );
 
-   logic [DWIDTH-1:0] q0;
-
 `ifdef DDR_SLIB_TSMC12FFC
+   logic [DWIDTH-1:0] q0;
    SDFSYNQD1BWP16P90CPD u_sync_0 [DWIDTH-1:0] (
       .D  (i_d),
       .SI ('0),    //FIXME
@@ -889,6 +887,7 @@ module ddr_demet #(
    //set_db -quiet [get_db insts */u_sync[*]] .preserve true
    //cadence script_end
 `else
+   logic [DWIDTH-1:0] q0;
    ddr_dff u_dff_0 [DWIDTH-1:0] (.i_clk(i_clk), .i_d(i_d), .o_q(q0));
    ddr_dff u_dff_1 [DWIDTH-1:0] (.i_clk(i_clk), .i_d(q0), .o_q(o_q));
 `endif
@@ -904,9 +903,8 @@ module ddr_demet_r #(
    output logic [DWIDTH-1:0] o_q
 );
 
-   logic [DWIDTH-1:0] q0;
-
 `ifdef DDR_SLIB_TSMC12FFC
+   logic [DWIDTH-1:0] q0;
    logic rst_n;
    ddr_inv u_inv (.i_a(i_rst), .o_z(rst_n));
 
@@ -945,6 +943,7 @@ module ddr_demet_r #(
    //set_db -quiet [get_db insts */u_sync[*]] .preserve true
    //cadence script_end
 `else
+   logic [DWIDTH-1:0] q0;
    ddr_dff_r u_dff_0 [DWIDTH-1:0] (.i_clk(i_clk), .i_rst(i_rst), .i_d(i_d), .o_q(q0));
    ddr_dff_r u_dff_1 [DWIDTH-1:0] (.i_clk(i_clk), .i_rst(i_rst), .i_d(q0), .o_q(o_q));
 `endif
@@ -960,9 +959,8 @@ module ddr_demet_s #(
    output logic [DWIDTH-1:0] o_q
 );
 
-   logic [DWIDTH-1:0] q0;
-
 `ifdef DDR_SLIB_TSMC12FFC
+   logic [DWIDTH-1:0] q0;
    logic set_n;
    ddr_inv u_inv (.i_a(i_set), .o_z(set_n));
 
@@ -1004,6 +1002,7 @@ module ddr_demet_s #(
    //set_db -quiet [get_db insts */u_sync[*]] .preserve true
    //cadence script_end
 `else
+   logic [DWIDTH-1:0] q0;
    ddr_dff_s u_dff_0 [DWIDTH-1:0] (.i_clk(i_clk), .i_set(i_set), .i_d(i_d), .o_q(q0 ));
    ddr_dff_s u_dff_1 [DWIDTH-1:0] (.i_clk(i_clk), .i_set(i_set), .i_d(q0 ), .o_q(o_q));
 `endif

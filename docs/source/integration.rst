@@ -4,8 +4,9 @@ Integration
 The Wavious DDR PHY supports LPDDR4x and LPDDR5 standards and is provided in a 1x32 configuration (Memory Controller side) consisting of two 1x16 channels (DRAM side). The 1x32 channel configuration is chosen to mitigate MCU+SRAM area overhead to DRAM interface width.
 
 .. note ::
-  * LPDDR5 configuration support may be limited in current release version.
   * 1x16 configuation may be supported in a future release version.
+  * LPDDR5 configuration support may be limited in current release version.
+  * DDR5 configuation may be supported in a future release version.
   * HBM configuation may be supported in a future release version.
 
 Design Files
@@ -43,6 +44,7 @@ The Wavious DDR PHY standard interfaces include: 1149.1 TAP, DFIv5.0, AHB-Lite, 
     **Global Clocks and Reset**
     ---------------------------------------------------------------  --------------------------------------------------------------------------------------------------------------
     i_phy_rst                  input        1                        Global PHY reset
+    i_ana_refclk               input        1                        Analog reference clock @38.4Mhz (low jitter)
     i_refclk                   input        1                        Reference clock @38.4Mhz
     o_refclk_on                output       1                        Refence clock on request
     i_refclk_alt               input        1                        Reference clock alternative
@@ -328,3 +330,72 @@ LPDDR5 Interface
 ++++++++++++++++
 
 The LPDDR5 compliant interface supports up to two 1x16 channels and two ranks. The DDR PHY does not support the ODT output pin. DRAM termination shall be set through MRW.
+
+Technology
+----------
+
+The Wavious DDR PHY has been initially developed in the GF12LPP process. Although the DDR PHY is highly digital in nature (e.g. no bandgaps) to improve portability to various foundries and process nodes, the DRAM protocol high transfer rates and varying channel characteristics require high performance mixed-signal and analog PHY circuits. The Wavious DDR PHY design includes various wrappers to ease standard cell migration and analog models for simulations. To port the DDR PHY to other process nodes, designers must perform two tasks. Firstly, designers must incorporate process-specific standard cells into the technology wrappers. Secondly, designers must create analog and mixed-signal schematics/layout which implement high performance circuits. The sections below describe the specific wrappers and models that can be leveraged to support DDR PHY process technology porting.
+
+.. note ::
+  * Datasheets for mixed-signal and analog circuits will be included in future releases.
+
+rtl/tech
+++++++++
+
+This directory includes standard cell wrappers. The DDR PHY design uses these wrappers exclusively to maximize code reuse. Designers should map technology specific cells into these wrappers.
+
+* **ddr_custom_lib.sv**   - DDR cells for high performance datapath
+* **ddr_stdcell_lib.sv**  - DDR cells for physical design (may be the same as wav_stdcell_lib cells depending on performance requirements)
+* **wav_stdcell_lib.sv**  - General cells for physical design
+* **wav_tcm_sp.sv**       - Single port SRAM for tightly coupled memory
+
+rtl/custom_ip
++++++++++++++
+
+This directory includes high performance mixed-signal circuit models that are used in various contexts within the DDR PHY. Designers must create process-specific mixed-signal schematics/layout for these circuits.
+
+* **wphy_2to1_14g_rvt.sv**                 - Differential 2:1 serializer
+* **wphy_cgc_diff_lvt.sv**                 - Differential clock gating cell (rest low)
+* **wphy_cgc_diff_svt.sv**                 - Differential clock gating cell (rest low)
+* **wphy_cgc_diff_rh_lvt.sv**              - Differential clock gating cell (rest high)
+* **wphy_cgc_diff_rh_svt.sv**              - Differential clock gating cell (rest high)
+* **wphy_clk_div_2ph_4g_dlymatch_lvt.sv**  - 2 phase clock divider delay match
+* **wphy_clk_div_2ph_4g_dlymatch_svt.sv**  - 2 phase clock divider delay match
+* **wphy_clk_div_2ph_4g_lvt.sv**           - 2 phase clock divider
+* **wphy_clk_div_2ph_4g_svt.sv**           - 2 phase clock divider
+* **wphy_clk_div_4ph_10g_dlymatch_svt.sv** - 4 phase clock divider delay match
+* **wphy_clk_div_4ph_10g_svt.sv**          - 4 phase clock divider
+* **wphy_clkmux_3to1_diff.sv**             - Differential 3:1 clock mux
+* **wphy_clkmux_3to1_diff_slvt.sv**        - Differential 3:1 clock mux (low latency)
+* **wphy_clkmux_diff.sv**                  - Differential 2:1 clock mux
+* **wphy_gfcm_lvt.sv**                     - Glitch free clock mux
+* **wphy_gfcm_svt.sv**                     - Glitch free clock mux
+* **wphy_pi_4g.sv**                        - Phase interpolator
+* **wphy_pi_dly_match_4g.sv**              - Phase interpolator delay match
+* **wphy_prog_dly_se_4g.sv**               - Programmable delay
+* **wphy_prog_dly_se_4g_small.sv**         - Programmable delay (low latency)
+* **wphy_sa_4g_2ph_pdly_no_esd.sv**        - Sense amplifier without ESD
+
+rtl/ddr_ip
+++++++++++
+
+This directory includes DDR PHY specific analog and mixed-signal components including IO pad models. Designers must create process-specific analog and mixed-signal schematics/layout for these circuits.
+
+* **wphy_lp4x5_cmn.sv**                    - Common clock
+* **wphy_lp4x5_cmn_clks_svt.sv**           - Common clock driver
+* **wphy_lp4x5_cke_drvr_w_lpbk.sv**        - CKE pad driver
+* **wphy_lp4x5_dq_drvr_w_lpbk.sv**         - DQ pad driver with loopback and ESD
+* **wphy_lp4x5_dqs_drvr_w_lpbk.sv**        - DQS pad driver with loopback and ESD
+* **wphy_lp4x5_dqs_rcvr_no_esd.sv**        - DQS pad receiver without ESD
+
+rtl/mvppll_ip
++++++++++++++
+
+This directory includes the multi-VCO PLL analog model. Designers must create process-specific analog and mixed-signal schematics/layout for these circuits.
+
+* **wphy_rpll_mvp_4g.sv**                  - Multi-VCO PLL
+
+rtl/wddr
+++++++++
+
+This directory includes the DDR PHY foundation digital control and datapath circuits. All blocks within this directory can be synthesized to a target technology assuming that standard cell wrappers have been updated appropriately. The Wavious DDR PHY is highly configurable and uses a common slice-based design methodology that is leveraged for DQ, DQS, CA, CK, CS, CKE, DBI, DM, etc. functional slices. Depending on design constraints (schedules, area, power, performance, etc), designers can implement the DDR PHY datapath in a physical design flow or a custom layout flow. The implementation methodology will have implications for tool flows, timing closure, signoff, etc. that should be carefully considered.

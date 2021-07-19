@@ -1,25 +1,19 @@
-/****************************************************************************
-*****************************************************************************
-** Wavious LLC Proprietary
-**
-** Copyright (c) 2019 Wavious LLC. All rights reserved.
-**
-** All data and information contained in or disclosed by this document
-** are confidential and proprietary information of Wavious LLC,
-** and all rights therein are expressly reserved. By accepting this
-** material, the recipient agrees that this material and the information
-** contained therein are held in confidence and in trust and will not be
-** used, copied, reproduced in whole or in part, nor its contents
-** revealed in any manner to others without the express written
-** permission of Wavious LLC.
-*****************************************************************************
-*
-* Module    : ddr_dqs_drvr_lpbk_wrapper.sv
-* Date      : 2020-04-19
-* Desciption: DQS Driver with loopback
-* Author    : shadzibabic
-*
-****************************************************************************/
+/*********************************************************************************
+Copyright (c) 2021 Wavious LLC
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+*********************************************************************************/
 
 `include "ddr_global_define.vh"
 `include "ddr_project_define.vh"

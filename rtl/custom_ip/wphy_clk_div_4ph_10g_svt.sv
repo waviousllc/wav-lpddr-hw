@@ -1,18 +1,17 @@
 /*********************************************************************************
 Copyright (c) 2021 Wavious LLC
 
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
 
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+    http://www.apache.org/licenses/LICENSE-2.0
 
-You should have received a copy of the GNU General Public License
-along with this program.  If not, see <http://www.gnu.org/licenses/>.
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
 
 *********************************************************************************/
 
@@ -305,6 +304,34 @@ wphy_clk_div_4ph_10g_svt_INV_DIFF_D2_GL16_RVT INV2 ( .out1b(clk2), .out2b(clk2b)
     .in2(i_clk270), .in1(i_clk90), .vdd(vdda), .vss(vss));
 
 wphy_clk_div_4ph_10g_svt_TIELO_D2_GL16_RVT I6 ( .tielo(tielo), .vss(vss), .vdd(vdda));
+
+`ifdef WPHY_ANA_TIMING
+
+specify
+
+ if(i_byp===1'b0) 
+  (i_clk0     => o_clk0)     = 136;
+ if(i_byp===1'b0) 
+  (i_clk90    => o_clk90)    = 136;
+ if(i_byp===1'b0) 
+  (i_clk180   => o_clk180)   = 136;
+ if(i_byp===1'b0) 
+  (i_clk270   => o_clk270)   = 136;
+
+ if(i_byp===1'b1) 
+  (i_clk0     => o_clk0)     = 62;
+ if(i_byp===1'b1) 
+  (i_clk90    => o_clk90)    = 62;
+ if(i_byp===1'b1) 
+  (i_clk180   => o_clk180)   = 62;
+ if(i_byp===1'b1) 
+  (i_clk270   => o_clk270)   = 62;
+  //$setup(i_rst,posedge i_clk0,45);
+  //$hold(posedge i_clk0,i_rst,30);
+
+endspecify
+
+`endif
 
 `endif //SYNTHESIS 
 endmodule

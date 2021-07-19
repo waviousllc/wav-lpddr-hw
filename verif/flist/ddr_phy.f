@@ -49,7 +49,6 @@ ${RTL}/wddr/ddr_ctrl_ahb_csr.sv
 ${RTL}/wddr/ddr_ctrl_plane.sv
 ${RTL}/wddr/ddr_phy_1x32.sv
 ${RTL}/wddr/ddr_component_lib.sv
-${RTL}/wddr/ddr_custom_lib.sv
 
 +incdir+${RTL}/ibex
 ${RTL}/ibex/ibex_alu.sv
@@ -84,6 +83,7 @@ ${RTL}/component/wav_component_lib.sv
 ${RTL}/jtag/wav_jtag_lib.sv
 
 +incdir+${RTL}/tech
+${RTL}/tech/ddr_custom_lib.sv
 ${RTL}/tech/ddr_stdcell_lib.sv
 ${RTL}/tech/wav_stdcell_lib.sv
 ${RTL}/tech/wav_tcm_sp.sv
@@ -109,4 +109,3 @@ ${RTL}/mcu_ibex/wav_mcuintf_csr.sv
 ${RTL}/mcu_ibex/wav_mcutop_ahb_csr.sv
 ${RTL}/mcu_ibex/wav_mcutop_csr.sv
 ${RTL}/mcu_ibex/wav_mcu_ibex.sv
-
