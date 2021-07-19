@@ -1,18 +1,17 @@
 /*********************************************************************************
 Copyright (c) 2021 Wavious LLC
 
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
 
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+    http://www.apache.org/licenses/LICENSE-2.0
 
-You should have received a copy of the GNU General Public License
-along with this program.  If not, see <http://www.gnu.org/licenses/>.
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
 
 *********************************************************************************/
 
@@ -22,7 +21,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // IC subversion:  IC6.1.8-64b.500.14 
 // Xcelium version: 20.09-s003
 // Copyright(C) 2005-2009, Cadence Design Systems, Inc
-// User: shadzibabic Pid: 13323
+// User: shadzibabic Pid: 11499
 // Design library name: wphy_gf12lp_lp4x5_sim_lib
 // Design cell name: wphy_lp4x5_cmn_clks_svt_tb
 // Design view name: config_vlog
@@ -33,7 +32,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // Library - wavshared_gf12lp_dig_lib, Cell - wphy_lp4x5_cmn_clks_svt_FFRES_DEMET_D1_GL16_RVT,
 //View - schematic
 // LAST TIME SAVED: Nov 10 10:24:09 2020
-// NETLIST TIME: Dec  7 22:24:41 2020
+// NETLIST TIME: May 26 14:59:42 2021
 `timescale 1ps / 1ps 
 
 
@@ -62,8 +61,8 @@ wphy_lp4x5_cmn_clks_svt_FFRES_D1_GL16_RVT FF1 ( .tielo(tielo), .tiehi(tiehi), .r
 endmodule
 // Library - wphy_gf12lp_ips_lib, Cell - wphy_lp4x5_cmn_clks_svt_wphy_cgc_diff_svt, View -
 //schematic
-// LAST TIME SAVED: Sep 17 20:49:50 2020
-// NETLIST TIME: Dec  7 22:24:41 2020
+// LAST TIME SAVED: Dec 29 15:13:54 2020
+// NETLIST TIME: May 26 14:59:43 2021
 `timescale 1ps / 1ps 
 
 
@@ -87,9 +86,9 @@ wphy_lp4x5_cmn_clks_svt_INVT_D2_GL16_RVT INVT0 ( .out(ckb), .en(en), .enb(enb), 
 wphy_lp4x5_cmn_clks_svt_INVT_D2_GL16_RVT INVT1 ( .out(ckbb), .en(en), .enb(enb), .vss(vss), 
     .in(i_clk_b), .vdd(vdd));
 
-wphy_lp4x5_cmn_clks_svt_TIELO_D2_GL16_RVT I1 ( .tielo(tielo), .vss(vss), .vdd(vdd));
+wphy_lp4x5_cmn_clks_svt_PU_D2_GL16_RVT PU0 ( .vdd(vdd), .en(en), .y(ckb));
 
-wphy_lp4x5_cmn_clks_svt_PU_D1_GL16_RVT PU0 ( .vdd(vdd), .en(en), .y(ckb));
+wphy_lp4x5_cmn_clks_svt_PD_D2_GL16_RVT PD0 ( .vss(vss), .enb(enb), .y(ckbb));
 
 wphy_lp4x5_cmn_clks_svt_INV_D2_GL16_RVT INV3 ( .in(ena), .vss(vss), .out(net012), .vdd(vdd));
 
@@ -105,18 +104,18 @@ wphy_lp4x5_cmn_clks_svt_INV_D2_GL16_RVT INV2_1 ( .in(ckbb), .vss(vss), .out(o_cl
 wphy_lp4x5_cmn_clks_svt_INV_D2_GL16_RVT INV2_0 ( .in(ckbb), .vss(vss), .out(o_clk_b), 
     .vdd(vdd));
 
-wphy_lp4x5_cmn_clks_svt_PD_D1_GL16_RVT PD0 ( .vss(vss), .enb(enb), .y(ckbb));
+wphy_lp4x5_cmn_clks_svt_PUDUM_D2_GL16_RVT PUDUM ( .vdd(vdd), .tiehi(vdd));
 
-wphy_lp4x5_cmn_clks_svt_TIEHI_D2_GL16_RVT I0 ( .tiehi(tiehi), .vss(vss), .vdd(vdd));
+wphy_lp4x5_cmn_clks_svt_PDDUM_D2_GL16_RVT PDDUM ( .vss(vss), .tielo(vss));
 
-wphy_lp4x5_cmn_clks_svt_LAT_D1_GL16_RVT LA0 ( .tielo(tielo), .vss(vss), .vdd(vdd), 
-    .tiehi(tiehi), .d(net012), .clkb(i_clk_b), .clk(i_clk), .q(enb));
+wphy_lp4x5_cmn_clks_svt_LAT_D1_GL16_RVT LA0 ( .tielo(vss), .vss(vss), .vdd(vdd), .tiehi(vdd), 
+    .d(net012), .clkb(i_clk_b), .clk(i_clk), .q(enb));
 
 endmodule
 // Library - wphy_gf12lp_ips_lib, Cell - wphy_lp4x5_cmn_clks_svt_wphy_clk_div2_4g_core_svt,
 //View - schematic
-// LAST TIME SAVED: Sep 17 20:50:32 2020
-// NETLIST TIME: Dec  7 22:24:41 2020
+// LAST TIME SAVED: Jan 21 22:52:59 2021
+// NETLIST TIME: May 26 14:59:43 2021
 `timescale 1ps / 1ps 
 
 
@@ -134,12 +133,131 @@ inout  vdda, vss;
 input  i_byp, i_clk0, i_clk180, i_rst;
 
 
-wphy_lp4x5_cmn_clks_svt_TIELO_D2_GL16_RVT I6 ( .tielo(tielo), .vss(vss), .vdd(vdda));
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM0_0 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
 
-wphy_lp4x5_cmn_clks_svt_NOR2_D1_GL16_RVT NOR0 ( .tielo(tielo), .tiehi(tiehi), .y(rst_or_byp_n), 
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM0_1 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM0_2 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM0_3 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM0_4 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM0_5 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM0_6 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM0_7 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM0_8 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM0_9 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM0_10 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM0_11 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM0_12 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM0_13 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM0_14 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM0_15 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM0_16 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM0_17 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM0_18 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM0_19 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM0_20 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM0_21 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM0_22 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM0_23 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM0_24 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM0_25 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM0_26 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM0_27 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM0_28 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM0_29 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM0_30 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM0_31 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM0_32 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM0_33 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM0_34 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM0_35 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM0_36 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM0_37 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM0_38 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM0_39 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM0_40 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_NOR2_D1_GL16_RVT NOR0 ( .tielo(vss), .tiehi(vdda), .y(rst_or_byp_n), 
     .vss(vss), .vdd(vdda), .b(i_byp), .a(i_rst));
-
-wphy_lp4x5_cmn_clks_svt_TIEHI_D2_GL16_RVT I5 ( .tiehi(tiehi), .vss(vss), .vdd(vdda));
 
 wphy_lp4x5_cmn_clks_svt_INV_D2_GL16_RVT INV16 ( .in(x90), .vss(vss), .out(x270), .vdd(vdda));
 
@@ -192,19 +310,19 @@ wphy_lp4x5_cmn_clks_svt_INVT_D2_GL16_RVT INVT0 ( .out(net030), .en(bypa), .enb(b
 wphy_lp4x5_cmn_clks_svt_INVT_D2_GL16_RVT I4 ( .out(net029), .en(bypa), .enb(bypb), .vss(vss), 
     .in(i_clk0), .vdd(vdda));
 
-wphy_lp4x5_cmn_clks_svt_LATRES_D1_GL16_RVT LAT0 ( .tiehi(tiehi), .tielo(tielo), .vss(vss), 
+wphy_lp4x5_cmn_clks_svt_LATRES_D1_GL16_RVT LAT0 ( .tiehi(vdda), .tielo(vss), .vss(vss), 
     .vdd(vdda), .rstb(rst_or_byp_n), .d(net020), .clkb(i_clk0), 
     .clk(i_clk180), .q(net015));
 
-wphy_lp4x5_cmn_clks_svt_LATRES_D1_GL16_RVT LAT1 ( .tiehi(tiehi), .tielo(tielo), .vss(vss), 
+wphy_lp4x5_cmn_clks_svt_LATRES_D1_GL16_RVT LAT1 ( .tiehi(vdda), .tielo(vss), .vss(vss), 
     .vdd(vdda), .rstb(rst_or_byp_n), .d(x180), .clkb(i_clk180), 
     .clk(i_clk0), .q(net020));
 
 endmodule
 // Library - wphy_gf12lp_ips_lib, Cell - wphy_lp4x5_cmn_clks_svt_wphy_gfcm_svt, View -
 //schematic
-// LAST TIME SAVED: Dec  2 23:53:28 2020
-// NETLIST TIME: Dec  7 22:24:41 2020
+// LAST TIME SAVED: May 26 13:50:27 2021
+// NETLIST TIME: May 26 14:59:43 2021
 `timescale 1ps / 1ps 
 
 
@@ -222,40 +340,36 @@ inout  vdda, vss;
 input  clk_sel, ena, i_clka0, i_clka180, i_clkb0, i_clkb180;
 
 
-wphy_lp4x5_cmn_clks_svt_TIEHI_D2_GL16_RVT I2 ( .tiehi(tiehi), .vss(vss), .vdd(vdda));
+wphy_lp4x5_cmn_clks_svt_PUDUM_D2_GL16_RVT PUDUM ( .vdd(vdda), .tiehi(vdda));
 
-wphy_lp4x5_cmn_clks_svt_LATSET_D1_GL16_RVT LA1 ( .tielo(tielo), .set(enb), .vss(vss), 
-    .vdd(vdda), .tiehi(tiehi), .d(net6), .clkb(clka180), .clk(clka0), 
-    .q(net023));
+wphy_lp4x5_cmn_clks_svt_LATSET_D1_GL16_RVT LA1 ( .tielo(vss), .set(enb), .vss(vss), .vdd(vdda), 
+    .tiehi(vdda), .d(net6), .clkb(clka180), .clk(clka0), .q(net023));
 
-wphy_lp4x5_cmn_clks_svt_LATSET_D1_GL16_RVT LA4 ( .tielo(tielo), .set(enb), .vss(vss), 
-    .vdd(vdda), .tiehi(tiehi), .d(net3), .clkb(clkb180), .clk(clkb0), 
-    .q(net022));
+wphy_lp4x5_cmn_clks_svt_LATSET_D1_GL16_RVT LA4 ( .tielo(vss), .set(enb), .vss(vss), .vdd(vdda), 
+    .tiehi(vdda), .d(net3), .clkb(clkb180), .clk(clkb0), .q(net022));
 
-wphy_lp4x5_cmn_clks_svt_LATSET_D1_GL16_RVT LA2 ( .tielo(tielo), .set(enb), .vss(vss), 
-    .vdd(vdda), .tiehi(tiehi), .d(net023), .clkb(clka0), .clk(clka180), 
-    .q(net5));
+wphy_lp4x5_cmn_clks_svt_LATSET_D1_GL16_RVT LA2 ( .tielo(vss), .set(enb), .vss(vss), .vdd(vdda), 
+    .tiehi(vdda), .d(net023), .clkb(clka0), .clk(clka180), .q(net5));
 
-wphy_lp4x5_cmn_clks_svt_LATSET_D1_GL16_RVT LA3 ( .tielo(tielo), .set(enb), .vss(vss), 
-    .vdd(vdda), .tiehi(tiehi), .d(net022), .clkb(clkb0), .clk(clkb180), 
-    .q(net2));
+wphy_lp4x5_cmn_clks_svt_LATSET_D1_GL16_RVT LA3 ( .tielo(vss), .set(enb), .vss(vss), .vdd(vdda), 
+    .tiehi(vdda), .d(net022), .clkb(clkb0), .clk(clkb180), .q(net2));
 
-wphy_lp4x5_cmn_clks_svt_FFSET_D1_GL16_RVT LA02 ( .prst(enb), .prstb(en), .tielo(tielo), 
-    .vss(vss), .vdd(vdda), .tiehi(tiehi), .d(y), .clkb(clkb180), 
+wphy_lp4x5_cmn_clks_svt_FFSET_D1_GL16_RVT LA02 ( .prst(enb), .prstb(en), .tielo(vss), 
+    .vss(vss), .vdd(vdda), .tiehi(vdda), .d(y), .clkb(clkb180), 
     .clk(clkb0), .q(net3));
 
-wphy_lp4x5_cmn_clks_svt_FFSET_D1_GL16_RVT LA01 ( .prst(enb), .prstb(en), .tielo(tielo), 
-    .vss(vss), .vdd(vdda), .tiehi(tiehi), .d(net4), .clkb(clka180), 
+wphy_lp4x5_cmn_clks_svt_FFSET_D1_GL16_RVT LA01 ( .prst(enb), .prstb(en), .tielo(vss), 
+    .vss(vss), .vdd(vdda), .tiehi(vdda), .d(net4), .clkb(clka180), 
     .clk(clka0), .q(net6));
 
-wphy_lp4x5_cmn_clks_svt_NAND2_D1_GL16_RVT NAND2 ( .tielo(tielo), .vdd(vdda), .y(pu_en), 
-    .vss(vss), .tiehi(tiehi), .b(enb_b), .a(enb_a));
+wphy_lp4x5_cmn_clks_svt_NAND2_D1_GL16_RVT NAND2 ( .tielo(vss), .vdd(vdda), .y(pu_en), 
+    .vss(vss), .tiehi(vdda), .b(enb_b), .a(enb_a));
 
-wphy_lp4x5_cmn_clks_svt_NAND2_D1_GL16_RVT NAND1 ( .tielo(tielo), .vdd(vdda), .y(y), .vss(vss), 
-    .tiehi(tiehi), .b(net5), .a(sel_clkb));
+wphy_lp4x5_cmn_clks_svt_NAND2_D1_GL16_RVT NAND1 ( .tielo(vss), .vdd(vdda), .y(y), .vss(vss), 
+    .tiehi(vdda), .b(enb_a), .a(sel_clkb));
 
-wphy_lp4x5_cmn_clks_svt_NAND2_D1_GL16_RVT NAND0 ( .tielo(tielo), .vdd(vdda), .y(net4), 
-    .vss(vss), .tiehi(tiehi), .b(net2), .a(sel_cala));
+wphy_lp4x5_cmn_clks_svt_NAND2_D1_GL16_RVT NAND0 ( .tielo(vss), .vdd(vdda), .y(net4), .vss(vss), 
+    .tiehi(vdda), .b(enb_b), .a(sel_cala));
 
 wphy_lp4x5_cmn_clks_svt_INVT_D2_GL16_RVT INVT0 ( .out(net036), .en(en_a), .enb(enb_a), 
     .vss(vss), .in(clka0), .vdd(vdda));
@@ -269,25 +383,332 @@ wphy_lp4x5_cmn_clks_svt_INVT_D2_GL16_RVT INVT4 ( .out(net035), .en(en_b), .enb(e
 wphy_lp4x5_cmn_clks_svt_INVT_D2_GL16_RVT INVT3 ( .out(net036), .en(en_b), .enb(enb_b), 
     .vss(vss), .in(clkb0), .vdd(vdda));
 
-wphy_lp4x5_cmn_clks_svt_LATRES_D1_GL16_RVT LA0 ( .tiehi(tiehi), .tielo(tielo), .vss(vss), 
+wphy_lp4x5_cmn_clks_svt_LATRES_D1_GL16_RVT LA0 ( .tiehi(vdda), .tielo(vss), .vss(vss), 
     .vdd(vdda), .rstb(en), .d(net09), .clkb(clkb180), .clk(clkb0), 
     .q(en_b));
 
-wphy_lp4x5_cmn_clks_svt_LATRES_D1_GL16_RVT LA00 ( .tiehi(tiehi), .tielo(tielo), .vss(vss), 
+wphy_lp4x5_cmn_clks_svt_LATRES_D1_GL16_RVT LA00 ( .tiehi(vdda), .tielo(vss), .vss(vss), 
     .vdd(vdda), .rstb(en), .d(net038), .clkb(clka180), .clk(clka0), 
     .q(en_a));
 
-wphy_lp4x5_cmn_clks_svt_PU_D1_GL16_RVT PU0 ( .vdd(vdda), .en(pu_en), .y(net036));
+wphy_lp4x5_cmn_clks_svt_PD_D2_GL16_RVT PD0 ( .vss(vss), .enb(pd_enb), .y(net035));
 
-wphy_lp4x5_cmn_clks_svt_NOR2_D1_GL16_RVT NOR0 ( .tielo(tielo), .tiehi(tiehi), .y(sel_clkb), 
+wphy_lp4x5_cmn_clks_svt_NOR2_D1_GL16_RVT NOR0 ( .tielo(vss), .tiehi(vdda), .y(sel_clkb), 
     .vss(vss), .vdd(vdda), .b(enb), .a(clk_selb));
 
-wphy_lp4x5_cmn_clks_svt_NOR2_D1_GL16_RVT NOR1 ( .tielo(tielo), .tiehi(tiehi), .y(sel_cala), 
+wphy_lp4x5_cmn_clks_svt_NOR2_D1_GL16_RVT NOR1 ( .tielo(vss), .tiehi(vdda), .y(sel_cala), 
     .vss(vss), .vdd(vdda), .b(enb), .a(sel_clkb));
 
-wphy_lp4x5_cmn_clks_svt_PD_D1_GL16_RVT PD0 ( .vss(vss), .enb(pd_enb), .y(net035));
+wphy_lp4x5_cmn_clks_svt_PDDUM_D2_GL16_RVT PDDUM ( .vss(vss), .tielo(vss));
 
-wphy_lp4x5_cmn_clks_svt_TIELO_D2_GL16_RVT I3 ( .tielo(tielo), .vss(vss), .vdd(vdda));
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_0 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_1 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_2 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_3 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_4 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_5 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_6 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_7 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_8 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_9 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_10 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_11 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_12 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_13 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_14 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_15 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_16 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_17 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_18 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_19 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_20 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_21 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_22 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_23 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_24 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_25 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_26 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_27 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_28 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_29 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_30 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_31 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_32 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_33 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_34 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_35 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_36 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_37 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_38 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_39 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_40 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_41 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_42 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_43 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_44 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_45 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_46 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_47 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_48 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_49 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_50 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_51 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_52 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_53 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_54 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_55 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_56 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_57 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_58 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_59 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_60 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_61 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_62 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_63 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_64 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_65 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_66 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_67 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_68 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_69 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_70 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_71 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_72 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_73 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_74 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_75 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_76 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_77 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_78 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_79 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_80 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_81 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_82 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_83 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_84 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_85 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_86 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_87 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_88 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_89 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_90 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_91 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_92 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_93 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_94 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_95 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_96 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_97 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_98 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_99 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_100 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_101 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_102 ( .tiehi(vdda), .tielo(vss), .vdd(vdda), 
+    .vss(vss));
 
 wphy_lp4x5_cmn_clks_svt_INV_D2_GL16_RVT INV5 ( .in(enb_b), .vss(vss), .out(clkb_sel), 
     .vdd(vdda));
@@ -355,11 +776,13 @@ wphy_lp4x5_cmn_clks_svt_INV_D2_GL16_RVT INV9_0 ( .in(net019), .vss(vss), .out(cl
 wphy_lp4x5_cmn_clks_svt_INV_D2_GL16_RVT INV10 ( .in(i_clka180), .vss(vss), .out(net049), 
     .vdd(vdda));
 
+wphy_lp4x5_cmn_clks_svt_PU_D2_GL16_RVT PU0 ( .vdd(vdda), .en(pu_en), .y(net036));
+
 endmodule
 // Library - wphy_gf12lp_lp4x5_lib, Cell - wphy_lp4x5_cmn_clks_svt,
 //View - schematic
-// LAST TIME SAVED: Dec  2 23:56:04 2020
-// NETLIST TIME: Dec  7 22:24:41 2020
+// LAST TIME SAVED: Apr  8 15:10:04 2021
+// NETLIST TIME: May 26 14:59:43 2021
 `timescale 1ps / 1ps 
 
 
@@ -405,29 +828,45 @@ input  gfcm_clksel, gfcm_ena, phy_clk_ena, pll0_div_clk_byp,
 `ifdef SYNTHESIS
 `else 
 
-wphy_lp4x5_cmn_clks_svt_LATRES_D1_GL16_RVT LAT0 ( .tiehi(tiehi), .tielo(tielo), .vss(vss), 
+wphy_lp4x5_cmn_clks_svt_LATRES_D1_GL16_RVT LAT0 ( .tiehi(vdd_phy), .tielo(vss), .vss(vss), 
     .vdd(vdd_phy), .rstb(rst_n), .d(clk_ena_ff), .clkb(div_clk90), 
     .clk(div_clk270), .q(clk_ena_ff1p5));
 
-wphy_lp4x5_cmn_clks_svt_TIEHI_D2_GL16_RVT I0 ( .tiehi(tiehi), .vss(vss), .vdd(vdd_phy));
+wphy_lp4x5_cmn_clks_svt_INV_D4_GL16_RVT INV12 ( .in(net6), .vss(vss), .out(net20), 
+    .vdd(vdd_phy));
 
-wphy_lp4x5_cmn_clks_svt_FFRES_D1_GL16_RVT FF1 ( .tielo(tielo), .tiehi(tiehi), .rst(rst), 
+wphy_lp4x5_cmn_clks_svt_INV_D4_GL16_RVT INV11 ( .in(net5), .vss(vss), .out(net14), 
+    .vdd(vdd_phy));
+
+wphy_lp4x5_cmn_clks_svt_INV_D4_GL16_RVT INV6 ( .in(net2), .vss(vss), .out(net9), 
+    .vdd(vdd_phy));
+
+wphy_lp4x5_cmn_clks_svt_INV_D4_GL16_RVT INV13 ( .in(net3), .vss(vss), .out(net10), 
+    .vdd(vdd_phy));
+
+wphy_lp4x5_cmn_clks_svt_INV_D4_GL16_RVT INV14 ( .in(net8), .vss(vss), .out(net7), 
+    .vdd(vdd_phy));
+
+wphy_lp4x5_cmn_clks_svt_INV_D4_GL16_RVT INV5 ( .in(net1), .vss(vss), .out(net4), 
+    .vdd(vdd_phy));
+
+wphy_lp4x5_cmn_clks_svt_FFRES_D1_GL16_RVT FF1 ( .tielo(vss), .tiehi(vdd_phy), .rst(rst), 
     .vss(vss), .vdd(vdd_phy), .rstb(rst_n), .d(phy_clk_ena), 
     .clkb(div_clk180), .clk(div_clk0), .q(net136));
 
-wphy_lp4x5_cmn_clks_svt_FFRES_DEMET_D1_GL16_RVT FF0 ( .tielo(tielo), .tiehi(tiehi), .rst(rst), 
+wphy_lp4x5_cmn_clks_svt_FFRES_DEMET_D1_GL16_RVT FF0 ( .tielo(vss), .tiehi(vdd_phy), .rst(rst), 
     .vss(vss), .vdd(vdd_phy), .rstb(rst_n), .d(pll0_div_clk_ena), 
-    .clkb(gfm_clk180), .clk(gfm_clk0), .q(div_clk_ena_ff));
+    .clkb(net9), .clk(net4), .q(div_clk_ena_ff));
 
 wphy_lp4x5_cmn_clks_svt_wphy_cgc_diff_svt CGC2 ( .o_clk(net133), .o_clk_b(net134), 
-    .ena(div_clk_ena_ff), .i_clk(gfm_clk0), .i_clk_b(gfm_clk180), 
-    .vdd(vdd_phy), .vss(vss));
+    .ena(div_clk_ena_ff), .i_clk(net4), .i_clk_b(net9), .vdd(vdd_phy), 
+    .vss(vss));
 
-wphy_lp4x5_cmn_clks_svt_wphy_cgc_diff_svt CGC0 ( .o_clk(phy_clk0), .o_clk_b(phy_clk180), 
+wphy_lp4x5_cmn_clks_svt_wphy_cgc_diff_svt CGC0 ( .o_clk(net6), .o_clk_b(net5), 
     .ena(clk_ena_ff), .i_clk(gfm_clk0), .i_clk_b(gfm_clk180), 
     .vdd(vdd_phy), .vss(vss));
 
-wphy_lp4x5_cmn_clks_svt_wphy_cgc_diff_svt CGC1 ( .o_clk(phy_clk90), .o_clk_b(phy_clk270), 
+wphy_lp4x5_cmn_clks_svt_wphy_cgc_diff_svt CGC1 ( .o_clk(net8), .o_clk_b(net3), 
     .ena(clk_ena_ff1p5), .i_clk(gfm_clk90), .i_clk_b(gfm_clk270), 
     .vdd(vdd_phy), .vss(vss));
 
@@ -448,7 +887,26 @@ wphy_lp4x5_cmn_clks_svt_wphy_gfcm_svt GFCM1 ( .clka_sel(gfcm1_clka_sel),
     .i_clka180(vco1_clk270), .i_clkb0(vco2_clk90), 
     .i_clkb180(vco2_clk270), .ena(gfcm_ena), .vss(vss));
 
-wphy_lp4x5_cmn_clks_svt_TIELO_D2_GL16_RVT I1 ( .tielo(tielo), .vss(vss), .vdd(vdd_phy));
+wphy_lp4x5_cmn_clks_svt_DUMLOAD_D2_GL16_RVT I9 ( .vdd(vdd_phy), .inn(gfm_clk90), .vss(vss), 
+    .inp(gfm_clk90));
+
+wphy_lp4x5_cmn_clks_svt_DUMLOAD_D2_GL16_RVT I8 ( .vdd(vdd_phy), .inn(gfm_clk270), .vss(vss), 
+    .inp(gfm_clk270));
+
+wphy_lp4x5_cmn_clks_svt_INV_D8_GL16_RVT I5 ( .in(net20), .vss(vss), .out(phy_clk0), 
+    .vdd(vdd_phy));
+
+wphy_lp4x5_cmn_clks_svt_INV_D8_GL16_RVT I4 ( .in(net14), .vss(vss), .out(phy_clk180), 
+    .vdd(vdd_phy));
+
+wphy_lp4x5_cmn_clks_svt_INV_D8_GL16_RVT I6 ( .in(net10), .vss(vss), .out(phy_clk270), 
+    .vdd(vdd_phy));
+
+wphy_lp4x5_cmn_clks_svt_INV_D8_GL16_RVT I7 ( .in(net7), .vss(vss), .out(phy_clk90), 
+    .vdd(vdd_phy));
+
+wphy_lp4x5_cmn_clks_svt_INV_D2_GL16_RVT INV8 ( .in(gfm_clk180), .vss(vss), .out(net2), 
+    .vdd(vdd_phy));
 
 wphy_lp4x5_cmn_clks_svt_INV_D2_GL16_RVT INV7_1 ( .in(div_clk180), .vss(vss), 
     .out(pll0_div_clk), .vdd(vdd_phy));
@@ -462,11 +920,482 @@ wphy_lp4x5_cmn_clks_svt_INV_D2_GL16_RVT INV3 ( .in(net136), .vss(vss), .out(net1
 wphy_lp4x5_cmn_clks_svt_INV_D2_GL16_RVT INV4 ( .in(net135), .vss(vss), .out(clk_ena_ff), 
     .vdd(vdd_phy));
 
+wphy_lp4x5_cmn_clks_svt_INV_D2_GL16_RVT INV2 ( .in(gfm_clk0), .vss(vss), .out(net1), 
+    .vdd(vdd_phy));
+
 wphy_lp4x5_cmn_clks_svt_INV_D2_GL16_RVT INV1 ( .in(rst_n), .vss(vss), .out(rst), 
     .vdd(vdd_phy));
 
 wphy_lp4x5_cmn_clks_svt_INV_D2_GL16_RVT INV0 ( .in(pll0_div_clk_rst), .vss(vss), .out(rst_n), 
     .vdd(vdd_phy));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_0 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_1 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_2 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_3 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_4 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_5 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_6 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_7 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_8 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_9 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_10 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_11 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_12 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_13 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_14 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_15 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_16 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_17 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_18 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_19 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_20 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_21 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_22 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_23 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_24 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_25 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_26 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_27 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_28 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_29 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_30 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_31 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_32 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_33 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_34 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_35 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_36 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_37 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_38 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_39 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_40 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_41 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_42 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_43 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_44 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_45 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_46 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_47 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_48 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_49 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_50 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_51 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_52 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_53 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_54 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_55 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_56 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_57 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_58 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_59 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_60 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_61 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_62 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_63 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_64 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_65 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_66 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_67 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_68 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_69 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_70 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_71 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_72 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_73 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_74 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_75 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_76 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_77 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_78 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_79 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_80 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_81 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_82 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_83 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_84 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_85 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_86 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_87 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_88 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_89 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_90 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_91 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_92 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_93 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_94 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_95 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_96 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_97 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_98 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_99 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_100 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_101 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_102 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_103 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_104 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_105 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_106 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_107 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_108 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_109 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_110 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_111 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_112 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_113 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_114 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_115 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_116 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_117 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_118 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_119 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_120 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_121 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_122 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_123 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_124 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_125 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_126 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_127 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_128 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_129 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_130 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_131 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_132 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_133 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_134 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_135 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_136 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_137 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_138 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_139 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_140 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_141 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_142 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_143 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_144 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_145 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_146 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_147 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_148 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_149 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_150 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_151 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_152 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_153 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_154 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
+
+wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT DUM_155 ( .tiehi(vdd_phy), .tielo(vss), .vdd(vdd_phy), 
+    .vss(vss));
 
 `endif //SYNTHESIS 
 endmodule
@@ -475,7 +1404,7 @@ endmodule
 // Library - wphy_gf12lp_lp4x5_sim_lib, Cell -
 //wphy_lp4x5_cmn_clks_svt_tb, View - schematic
 // LAST TIME SAVED: Dec  7 22:24:21 2020
-// NETLIST TIME: Dec  7 22:24:42 2020
+// NETLIST TIME: May 26 14:59:43 2021
 `timescale 1ps / 1ps 
 
 
@@ -488,6 +1417,59 @@ endmodule
 
  // END AMS-UNL Netlist
 
+//systemVerilog HDL for "wavshared_ln08lpu_dig_lib", "wphy_lp4x5_cmn_clks_svt_INV_D8_GL16_RVT" "systemVerilog"
+
+
+module wphy_lp4x5_cmn_clks_svt_INV_D8_GL16_RVT ( in,  out
+`ifdef WLOGIC_MODEL_NO_PG
+`else
+, vdd, vss
+`endif //WLOGIC_MODEL_NO_PG
+);
+
+  input in;
+  output out;
+`ifdef WLOGIC_MODEL_NO_PG
+`else
+  inout vdd;
+  inout vss;
+`endif //WLOGIC_MODEL_NO_PG
+
+`ifdef WLOGIC_MODEL_NO_PG
+`else
+
+`ifdef WLOGIC_MODEL_PWR_CHECK
+  wire   power_ok;
+  assign power_ok = ~vss & vdd;
+  
+  assign out = (power_ok) ? 1'bz : 1'bx;
+
+`endif //WLOGIC_MODEL_PWR_CHECK
+
+`endif //WLOGIC_MODEL_NO_PG
+
+   assign out = ~in;
+
+endmodule
+//systemVerilog HDL for "wavshared_tsmc12ffc_lib", "DUMLOAD_D1_GL16_RVT" "systemVerilog"
+
+
+module wphy_lp4x5_cmn_clks_svt_DUMLOAD_D2_GL16_RVT ( inp, inn
+`ifdef WLOGIC_MODEL_NO_PG
+`else
+, vss, vdd 
+`endif //WLOGIC_MODEL_NO_PG
+); 
+
+  input inp;
+  input inn;
+`ifdef WLOGIC_MODEL_NO_PG
+`else
+  inout vdd;
+  inout vss;
+`endif //WLOGIC_MODEL_NO_PG
+
+endmodule
 
 
 
@@ -750,6 +1732,26 @@ module wphy_lp4x5_cmn_clks_svt_NOR2_D1_GL16_RVT ( y, a, b
   assign y=~(a|b);
 
 endmodule
+//systemVerilog HDL for "wavshared_gf12lp_dig_lib", "wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT" "systemVerilog"
+
+
+module wphy_lp4x5_cmn_clks_svt_DUM_D1_GL16_RVT ( tielo, tiehi
+`ifdef WLOGIC_MODEL_NO_PG
+`else
+, vss, vdd 
+`endif //WLOGIC_MODEL_NO_PG
+
+ );
+
+  input tiehi;
+  input tielo;
+`ifdef WLOGIC_MODEL_NO_PG
+`else
+  inout vdd;
+  inout vss;
+`endif //WLOGIC_MODEL_NO_PG
+
+endmodule
 //systemVerilog HDL for "wavshared_tsmc12ffc_lib", "wphy_lp4x5_cmn_clks_svt_LAT_D1_GL16_RVT" "systemVerilog"
 
 `timescale 1ps/1ps
@@ -815,37 +1817,38 @@ assign #1  q = polarity_ok ?
                            : 1'bx;
 
 endmodule
-//systemVerilog HDL for "wavshared_tsmc12ffc_lib", "wphy_lp4x5_cmn_clks_svt_PD_D1_GL16_RVT" "systemVerilog"
+//systemVerilog HDL for "wavshared_tsmc12ffc_lib", "wphy_lp4x5_cmn_clks_svt_PDDUM_D2_GL16_RVT" "systemVerilog"
 
-module wphy_lp4x5_cmn_clks_svt_PD_D1_GL16_RVT( enb, y
+
+module wphy_lp4x5_cmn_clks_svt_PDDUM_D2_GL16_RVT (  tielo
 `ifdef WLOGIC_MODEL_NO_PG
 `else
 , vss
 `endif //WLOGIC_MODEL_NO_PG
 ); 
 
-  input y;
-  input enb;
-
+  input tielo;
 `ifdef WLOGIC_MODEL_NO_PG
 `else
   inout vss;
 `endif //WLOGIC_MODEL_NO_PG
 
+endmodule
+//systemVerilog HDL for "wavshared_tsmc12ffc_lib", "wphy_lp4x5_cmn_clks_svt_PUDUM_D2_GL16_RVT" "systemVerilog"
+
+
+module wphy_lp4x5_cmn_clks_svt_PUDUM_D2_GL16_RVT ( tiehi
 `ifdef WLOGIC_MODEL_NO_PG
 `else
-
-`ifdef WLOGIC_MODEL_PWR_CHECK
-  wire   power_ok;
-  assign power_ok = ~vss ;
-  
-  assign y = (power_ok) ? 1'bz : 1'bx;
-
-`endif //WLOGIC_MODEL_PWR_CHECK
-
+, vdd 
 `endif //WLOGIC_MODEL_NO_PG
+);
 
-  assign y =  enb ? 1'b0 : 1'bz;
+  input tiehi;
+`ifdef WLOGIC_MODEL_NO_PG
+`else
+  inout vdd;
+`endif //WLOGIC_MODEL_NO_PG
 
 endmodule
 //systemVerilog HDL for "wavshared_tsmc12ffc_lib", "wphy_lp4x5_cmn_clks_svt_INV_D2_GL16_RVT" "systemVerilog"
@@ -882,10 +1885,44 @@ module wphy_lp4x5_cmn_clks_svt_INV_D2_GL16_RVT ( in, out
    assign out = ~in;
 
 endmodule
-//systemVerilog HDL for "wavshared_tsmc12ffc_lib", "wphy_lp4x5_cmn_clks_svt_PU_D1_GL16_RVT" "systemVerilog"
+//systemVerilog HDL for "wavshared_tsmc12ffc_lib", "wphy_lp4x5_cmn_clks_svt_PD_D2_GL16_RVT" "systemVerilog"
 
 
-module wphy_lp4x5_cmn_clks_svt_PU_D1_GL16_RVT ( en, y
+module wphy_lp4x5_cmn_clks_svt_PD_D2_GL16_RVT ( enb, y
+`ifdef WLOGIC_MODEL_NO_PG
+`else
+, vss
+`endif //WLOGIC_MODEL_NO_PG
+); 
+
+  input y;
+  input enb;
+
+`ifdef WLOGIC_MODEL_NO_PG
+`else
+  inout vss;
+`endif //WLOGIC_MODEL_NO_PG
+
+`ifdef WLOGIC_MODEL_NO_PG
+`else
+
+`ifdef WLOGIC_MODEL_PWR_CHECK
+  wire   power_ok;
+  assign power_ok = ~vss ;
+  
+  assign y = (power_ok) ? 1'bz : 1'bx;
+
+`endif //WLOGIC_MODEL_PWR_CHECK
+
+`endif //WLOGIC_MODEL_NO_PG
+
+  assign y =  enb ? 1'b0 : 1'bz;
+
+endmodule
+//systemVerilog HDL for "wavshared_tsmc12ffc_lib", "wphy_lp4x5_cmn_clks_svt_PU_D2_GL16_RVT" "systemVerilog"
+
+
+module wphy_lp4x5_cmn_clks_svt_PU_D2_GL16_RVT ( en, y
 `ifdef WLOGIC_MODEL_NO_PG
 `else
 , vdd 
@@ -913,40 +1950,6 @@ module wphy_lp4x5_cmn_clks_svt_PU_D1_GL16_RVT ( en, y
 `endif //WLOGIC_MODEL_NO_PG
 
  assign y = en ? 1'bz : 1'b1;
-
-endmodule
-//systemVerilog HDL for "wavshared_ln08lpu_dig_lib", "wphy_lp4x5_cmn_clks_svt_TIELO_D2_GL16_RVT" "systemVerilog"
-
-
-module wphy_lp4x5_cmn_clks_svt_TIELO_D2_GL16_RVT ( tielo
-`ifdef WLOGIC_MODEL_NO_PG
-`else
-, vss, vdd
-`endif //WLOGIC_MODEL_NO_PG
-);
-
-  output tielo;
-`ifdef WLOGIC_MODEL_NO_PG
-`else
-  inout vdd;
-  inout vss;
-`endif //WLOGIC_MODEL_NO_PG
-
-`ifdef WLOGIC_MODEL_NO_PG
-`else
-
-`ifdef WLOGIC_MODEL_PWR_CHECK
-  wire   power_ok;
-  assign power_ok = ~vss & vdd;
-
-  assign tielo = (power_ok) ? 1'bz : 1'bx;
-
-`endif //WLOGIC_MODEL_PWR_CHECK
-
-`endif //WLOGIC_MODEL_NO_PG
-
-  assign tielo =  1'b0 ;
-
 
 endmodule
 //systemVerilog HDL for "wavshared_tsmc12ffc_lib", "wphy_lp4x5_cmn_clks_svt_INVT_D2_GL16_RVT" "systemVerilog"
@@ -1067,18 +2070,18 @@ module wphy_lp4x5_cmn_clks_svt_FFRES_D1_GL16_RVT( q, clk, clkb, d, rst, rstb
   end
 
 endmodule
-//systemVerilog HDL for "wavshared_ln08lpu_dig_lib", "wphy_lp4x5_cmn_clks_svt_TIEHI_D2_GL16_RVT" "systemVerilog"
+//systemVerilog HDL for "wavshared_ln08lpu_dig_lib", "wphy_lp4x5_cmn_clks_svt_INV_D4_GL16_RVT" "systemVerilog"
 
 
-module wphy_lp4x5_cmn_clks_svt_TIEHI_D2_GL16_RVT ( tiehi
+module wphy_lp4x5_cmn_clks_svt_INV_D4_GL16_RVT ( in, out
 `ifdef WLOGIC_MODEL_NO_PG
 `else
-, vss, vdd
+, vdd, vss
 `endif //WLOGIC_MODEL_NO_PG
 );
 
-
-  output tiehi;
+  input in;
+  output out;
 `ifdef WLOGIC_MODEL_NO_PG
 `else
   inout vdd;
@@ -1091,14 +2094,15 @@ module wphy_lp4x5_cmn_clks_svt_TIEHI_D2_GL16_RVT ( tiehi
 `ifdef WLOGIC_MODEL_PWR_CHECK
   wire   power_ok;
   assign power_ok = ~vss & vdd;
-
-  assign tiehi = (power_ok) ? 1'bz : 1'bx;
+  
+  assign out = (power_ok) ? 1'bz : 1'bx;
 
 `endif //WLOGIC_MODEL_PWR_CHECK
 
 `endif //WLOGIC_MODEL_NO_PG
 
-  assign tiehi =  1'b1 ;
+   assign out = ~in;
+
 
 endmodule
 //systemVerilog HDL for "wavshared_ln08lpu_dig_lib", "LATRES_D1_GL16_LVT" "systemVerilog"

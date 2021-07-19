@@ -1,20 +1,30 @@
-/*********************************************************************************
-Copyright (c) 2021 Wavious LLC
+/****************************************************************************
+*****************************************************************************
+** Wavious LLC Proprietary
+**
+** Copyright (c) 2020 Wavious LLC. All rights reserved.
+**
+** All data and information contained in or disclosed by this document
+** are confidential and proprietary information of Wavious LLC,
+** and all rights therein are expressly reserved. By accepting this
+** material, the recipient agrees that this material and the information
+** contained therein are held in confidence and in trust and will not be
+** used, copied, reproduced in whole or in part, nor its contents
+** revealed in any manner to others without the express written
+** permission of Wavious LLC.
+*****************************************************************************
+*
+* Module    : ddr_phy_tb_top.sv
+* Date      : 2020-02-25
+* Desciption:
+*
+* Features:
+* -----------------------------------------------------------------------
+*    1) Run the "vpp" script to compile the *.sv.vpp file to *.sv
+* $Id: wddr_tb_top.sv,v 1.85 2021/04/16 14:34:59 schilukuri Exp $
+*
+****************************************************************************/
 
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
-*********************************************************************************/
 `ifndef DDR_SYNTH
 module wddr_tb_top;
 
@@ -575,6 +585,7 @@ endtask
 task automatic por;
     begin
         force wddr_tb_top.u_phy_1x32.i_ahb_clk    = '0;
+        force wddr_tb_top.u_phy_1x32.i_ana_refclk = '0;
         force wddr_tb_top.u_phy_1x32.i_refclk     = '0;
         force wddr_tb_top.u_phy_1x32.i_refclk_alt = '0;
         force wddr_tb_top.u_phy_1x32.i_jtag_tck   = '0;
@@ -589,6 +600,7 @@ task automatic por;
         i_jtag_trst_n = 1'b1;
         wait_refclk(5);
         release wddr_tb_top.u_phy_1x32.i_ahb_clk    ;
+        release wddr_tb_top.u_phy_1x32.i_ana_refclk ;
         release wddr_tb_top.u_phy_1x32.i_refclk     ;
         release wddr_tb_top.u_phy_1x32.i_refclk_alt ;
         release wddr_tb_top.u_phy_1x32.i_jtag_tck   ;
@@ -699,6 +711,7 @@ ddr_phy_1x16 u_phy_1x16 (
     .i_dfi_clk_on                ('0                ), // FIXME
     .o_dfi_clk                   (o_dfi_clk         ),
 
+    .i_ana_refclk                (i_refclk          ),
     .i_refclk                    (i_refclk          ),
     .i_refclk_alt                (i_refclk_alt      ),
     .o_refclk_on                 (                  ),
@@ -1028,6 +1041,7 @@ ddr_phy_1x32 u_phy_1x32 (
     .i_dfi_clk_on                ('0                ), // FIXME
     .o_dfi_clk                   (dfi_clk_nodly     ),
 
+    .i_ana_refclk                (i_refclk          ),
     .i_refclk                    (i_refclk          ),
     .i_refclk_alt                (i_refclk_alt      ),
     .o_refclk_on                 (                  ),

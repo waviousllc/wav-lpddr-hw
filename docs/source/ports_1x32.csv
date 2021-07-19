@@ -1,6 +1,7 @@
 i_phy_rst,input,1
 i_dfi_clk_on,input,1
 o_dfi_clk,output,1
+i_ana_refclk,input,1
 i_refclk,input,1
 o_refclk_on,output,1
 i_refclk_alt,input,1

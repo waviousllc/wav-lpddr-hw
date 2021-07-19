@@ -54,6 +54,9 @@
           
 
           
+            
+            <img src="_static/wavious_logo.png" class="logo" alt="Logo"/>
+          
           </a>
 
           
@@ -93,6 +96,14 @@
 <li class="toctree-l3"><a class="reference internal" href="#dfiv5-0-interface">DFIv5.0 Interface</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#lpddr4x-interface">LPDDR4x Interface</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#lpddr5-interface">LPDDR5 Interface</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#technology">Technology</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#rtl-tech">rtl/tech</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rtl-custom-ip">rtl/custom_ip</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rtl-ddr-ip">rtl/ddr_ip</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rtl-mvppll-ip">rtl/mvppll_ip</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rtl-wddr">rtl/wddr</a></li>
 </ul>
 </li>
 </ul>
@@ -172,14 +183,15 @@
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <ul class="simple">
-<li><p>LPDDR5 configuration support may be limited in current release version.</p></li>
 <li><p>1x16 configuation may be supported in a future release version.</p></li>
+<li><p>LPDDR5 configuration support may be limited in current release version.</p></li>
+<li><p>DDR5 configuation may be supported in a future release version.</p></li>
 <li><p>HBM configuation may be supported in a future release version.</p></li>
 </ul>
 </div>
 <div class="section" id="design-files">
 <h2>Design Files<a class="headerlink" href="#design-files" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>rtl
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>./rtl
 |-- ahb
 |   |-- wav_ahb.sv
 |   `-- wav_ahb_pkg.sv
@@ -198,6 +210,7 @@
 |   |-- wphy_clk_div_4ph_10g_dlymatch_svt.sv
 |   |-- wphy_clk_div_4ph_10g_svt.sv
 |   |-- wphy_clkmux_3to1_diff.sv
+|   |-- wphy_clkmux_3to1_diff_slvt.sv
 |   |-- wphy_clkmux_diff.sv
 |   |-- wphy_gfcm_lvt.sv
 |   |-- wphy_gfcm_svt.sv
@@ -267,6 +280,7 @@
 |-- pll_shared
 |   `-- wav_pll_shared_lib.v
 |-- tech
+    |-- ddr_custom_lib.sv
 |   |-- ddr_stdcell_lib.sv
 |   |-- wav_legacy_stdcell_lib.v
 |   |-- wav_stdcell_lib.sv
@@ -297,7 +311,6 @@
     |-- ddr_ctrl_csr.sv
     |-- ddr_ctrl_csr_defs.vh
     |-- ddr_ctrl_plane.sv
-    |-- ddr_custom_lib.sv
     |-- ddr_dfi.sv
     |-- ddr_dfi_ahb_csr.sv
     |-- ddr_dfi_csr.sv
@@ -405,1169 +418,1174 @@
 <td><p>1</p></td>
 <td><p>Global PHY reset</p></td>
 </tr>
-<tr class="row-even"><td><p>i_refclk</p></td>
+<tr class="row-even"><td><p>i_ana_refclk</p></td>
+<td><p>input</p></td>
+<td><p>1</p></td>
+<td><p>Analog reference clock &#64;38.4Mhz (low jitter)</p></td>
+</tr>
+<tr class="row-odd"><td><p>i_refclk</p></td>
 <td><p>input</p></td>
 <td><p>1</p></td>
 <td><p>Reference clock &#64;38.4Mhz</p></td>
 </tr>
-<tr class="row-odd"><td><p>o_refclk_on</p></td>
+<tr class="row-even"><td><p>o_refclk_on</p></td>
 <td><p>output</p></td>
 <td><p>1</p></td>
 <td><p>Refence clock on request</p></td>
 </tr>
-<tr class="row-even"><td><p>i_refclk_alt</p></td>
+<tr class="row-odd"><td><p>i_refclk_alt</p></td>
 <td><p>input</p></td>
 <td><p>1</p></td>
 <td><p>Reference clock alternative</p></td>
 </tr>
-<tr class="row-odd"><td colspan="3"><p><strong>Test</strong></p></td>
+<tr class="row-even"><td colspan="3"><p><strong>Test</strong></p></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><p>i_gpb</p></td>
+<tr class="row-odd"><td><p>i_gpb</p></td>
 <td><p>input</p></td>
 <td><p>[7:0]</p></td>
 <td><p>General purpose bus</p></td>
 </tr>
-<tr class="row-odd"><td><p>o_gpb</p></td>
+<tr class="row-even"><td><p>o_gpb</p></td>
 <td><p>output</p></td>
 <td><p>[7:0]</p></td>
 <td><p>General purpose bus</p></td>
 </tr>
-<tr class="row-even"><td><p>o_debug</p></td>
+<tr class="row-odd"><td><p>o_debug</p></td>
 <td><p>output</p></td>
 <td><p>[31:0]</p></td>
 <td><p>Debug bus (low frequency)</p></td>
 </tr>
-<tr class="row-odd"><td><p>i_freeze_n</p></td>
+<tr class="row-even"><td><p>i_freeze_n</p></td>
 <td><p>input</p></td>
 <td><p>1</p></td>
 <td><p>Freeze IO (active low)</p></td>
 </tr>
-<tr class="row-even"><td><p>i_hiz_n</p></td>
+<tr class="row-odd"><td><p>i_hiz_n</p></td>
 <td><p>input</p></td>
 <td><p>1</p></td>
 <td><p>High impedance (active low)</p></td>
 </tr>
-<tr class="row-odd"><td><p>i_iddq_mode</p></td>
+<tr class="row-even"><td><p>i_iddq_mode</p></td>
 <td><p>input</p></td>
 <td><p>1</p></td>
 <td><p>IDDQ mode enable</p></td>
 </tr>
-<tr class="row-even"><td><p>o_dtst</p></td>
+<tr class="row-odd"><td><p>o_dtst</p></td>
 <td><p>output</p></td>
 <td><p>1</p></td>
 <td><p>Digital clock test (high frequency)</p></td>
 </tr>
-<tr class="row-odd"><td colspan="3"><p><strong>Interrupts</strong></p></td>
+<tr class="row-even"><td colspan="3"><p><strong>Interrupts</strong></p></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><p>i_irq</p></td>
+<tr class="row-odd"><td><p>i_irq</p></td>
 <td><p>input</p></td>
 <td><p>[3:0]</p></td>
 <td><p>Interrupt</p></td>
 </tr>
-<tr class="row-odd"><td><p>o_irq</p></td>
+<tr class="row-even"><td><p>o_irq</p></td>
 <td><p>output</p></td>
 <td><p>[1:0]</p></td>
 <td><p>Interrupt</p></td>
 </tr>
-<tr class="row-even"><td colspan="3"><p><strong>DFT</strong></p></td>
+<tr class="row-odd"><td colspan="3"><p><strong>DFT</strong></p></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><p>i_scan_mode</p></td>
+<tr class="row-even"><td><p>i_scan_mode</p></td>
 <td><p>input</p></td>
 <td><p>1</p></td>
 <td><p>Scan mode enable</p></td>
 </tr>
-<tr class="row-even"><td><p>i_scan_clk</p></td>
+<tr class="row-odd"><td><p>i_scan_clk</p></td>
 <td><p>input</p></td>
 <td><p>1</p></td>
 <td><p>Scan clock</p></td>
 </tr>
-<tr class="row-odd"><td><p>i_scan_en</p></td>
+<tr class="row-even"><td><p>i_scan_en</p></td>
 <td><p>input</p></td>
 <td><p>1</p></td>
 <td><p>Scan shift enable</p></td>
 </tr>
-<tr class="row-even"><td><p>i_scan_freq_en</p></td>
+<tr class="row-odd"><td><p>i_scan_freq_en</p></td>
 <td><p>input</p></td>
 <td><p>[7:0]</p></td>
 <td><p>Scan clock tree frequency enable</p></td>
 </tr>
-<tr class="row-odd"><td><p>i_scan_cgc_ctrl</p></td>
+<tr class="row-even"><td><p>i_scan_cgc_ctrl</p></td>
 <td><p>input</p></td>
 <td><p>1</p></td>
 <td><p>CGC override enable</p></td>
 </tr>
-<tr class="row-even"><td><p>i_scan_rst_ctrl</p></td>
+<tr class="row-odd"><td><p>i_scan_rst_ctrl</p></td>
 <td><p>input</p></td>
 <td><p>1</p></td>
 <td><p>Reset override enable</p></td>
 </tr>
-<tr class="row-odd"><td><p>i_scan_set_ctrl</p></td>
+<tr class="row-even"><td><p>i_scan_set_ctrl</p></td>
 <td><p>input</p></td>
 <td><p>1</p></td>
 <td><p>Set override enable</p></td>
 </tr>
-<tr class="row-even"><td><p>i_scan</p></td>
+<tr class="row-odd"><td><p>i_scan</p></td>
 <td><p>input</p></td>
 <td><p>[15:0]</p></td>
 <td><p>Scan chain in</p></td>
 </tr>
-<tr class="row-odd"><td><p>o_scan</p></td>
+<tr class="row-even"><td><p>o_scan</p></td>
 <td><p>output</p></td>
 <td><p>[15:0]</p></td>
 <td><p>Scan chain out</p></td>
 </tr>
-<tr class="row-even"><td colspan="3"><p><strong>TAP</strong></p></td>
+<tr class="row-odd"><td colspan="3"><p><strong>TAP</strong></p></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><p>i_jtag_tck</p></td>
+<tr class="row-even"><td><p>i_jtag_tck</p></td>
 <td><p>input</p></td>
 <td><p>1</p></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><p>i_jtag_trst_n</p></td>
+<tr class="row-odd"><td><p>i_jtag_trst_n</p></td>
 <td><p>input</p></td>
 <td><p>1</p></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><p>i_jtag_tms</p></td>
+<tr class="row-even"><td><p>i_jtag_tms</p></td>
 <td><p>input</p></td>
 <td><p>1</p></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><p>i_jtag_tdi</p></td>
+<tr class="row-odd"><td><p>i_jtag_tdi</p></td>
 <td><p>input</p></td>
 <td><p>1</p></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><p>o_jtag_tdo</p></td>
+<tr class="row-even"><td><p>o_jtag_tdo</p></td>
 <td><p>output</p></td>
 <td><p>1</p></td>
 <td></td>
 </tr>
-<tr class="row-even"><td colspan="3"><p><strong>AHB</strong></p></td>
+<tr class="row-odd"><td colspan="3"><p><strong>AHB</strong></p></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><p>i_ahb_clk</p></td>
+<tr class="row-even"><td><p>i_ahb_clk</p></td>
 <td><p>input</p></td>
 <td><p>1</p></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><p>o_ahb_clk_on</p></td>
+<tr class="row-odd"><td><p>o_ahb_clk_on</p></td>
 <td><p>output</p></td>
 <td><p>1</p></td>
 <td><p>AHB clock on request</p></td>
 </tr>
-<tr class="row-odd"><td><p>i_ahb_rst</p></td>
+<tr class="row-even"><td><p>i_ahb_rst</p></td>
 <td><p>input</p></td>
 <td><p>1</p></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><p>i_ahb_csr_rst</p></td>
+<tr class="row-odd"><td><p>i_ahb_csr_rst</p></td>
 <td><p>input</p></td>
 <td><p>1</p></td>
 <td><p>AHB CSR reset</p></td>
 </tr>
-<tr class="row-odd"><td colspan="3"><p><strong>AHB Slave</strong></p></td>
+<tr class="row-even"><td colspan="3"><p><strong>AHB Slave</strong></p></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><p>i_ahb_haddr</p></td>
+<tr class="row-odd"><td><p>i_ahb_haddr</p></td>
 <td><p>input</p></td>
 <td><p>[31:0]</p></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><p>i_ahb_hwrite</p></td>
+<tr class="row-even"><td><p>i_ahb_hwrite</p></td>
 <td><p>input</p></td>
 <td><p>1</p></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><p>i_ahb_hsel</p></td>
+<tr class="row-odd"><td><p>i_ahb_hsel</p></td>
 <td><p>input</p></td>
 <td><p>1</p></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><p>i_ahb_hwdata</p></td>
+<tr class="row-even"><td><p>i_ahb_hwdata</p></td>
 <td><p>input</p></td>
 <td><p>[31:0]</p></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><p>i_ahb_htrans</p></td>
+<tr class="row-odd"><td><p>i_ahb_htrans</p></td>
 <td><p>input</p></td>
 <td><p>[1:0]</p></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><p>i_ahb_hsize</p></td>
+<tr class="row-even"><td><p>i_ahb_hsize</p></td>
 <td><p>input</p></td>
 <td><p>[2:0]</p></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><p>i_ahb_hburst</p></td>
+<tr class="row-odd"><td><p>i_ahb_hburst</p></td>
 <td><p>input</p></td>
 <td><p>[2:0]</p></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><p>i_ahb_hreadyin</p></td>
+<tr class="row-even"><td><p>i_ahb_hreadyin</p></td>
 <td><p>input</p></td>
 <td><p>1</p></td>
 <td><p>HREADY</p></td>
 </tr>
-<tr class="row-even"><td><p>o_ahb_hready</p></td>
+<tr class="row-odd"><td><p>o_ahb_hready</p></td>
 <td><p>output</p></td>
 <td><p>1</p></td>
 <td><p>HREADYOUT</p></td>
 </tr>
-<tr class="row-odd"><td><p>o_ahb_hrdata</p></td>
+<tr class="row-even"><td><p>o_ahb_hrdata</p></td>
 <td><p>output</p></td>
 <td><p>[31:0]</p></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><p>o_ahb_hresp</p></td>
+<tr class="row-odd"><td><p>o_ahb_hresp</p></td>
 <td><p>output</p></td>
 <td><p>[1:0]</p></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td colspan="3"><p><strong>AHB Master</strong></p></td>
+<tr class="row-even"><td colspan="3"><p><strong>AHB Master</strong></p></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><p>o_ahb_haddr</p></td>
+<tr class="row-odd"><td><p>o_ahb_haddr</p></td>
 <td><p>output</p></td>
 <td><p>[31:0]</p></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><p>o_ahb_hwrite</p></td>
+<tr class="row-even"><td><p>o_ahb_hwrite</p></td>
 <td><p>output</p></td>
 <td><p>1</p></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><p>o_ahb_hwdata</p></td>
+<tr class="row-odd"><td><p>o_ahb_hwdata</p></td>
 <td><p>output</p></td>
 <td><p>[31:0]</p></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><p>o_ahb_htrans</p></td>
+<tr class="row-even"><td><p>o_ahb_htrans</p></td>
 <td><p>output</p></td>
 <td><p>[1:0]</p></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><p>o_ahb_hsize</p></td>
+<tr class="row-odd"><td><p>o_ahb_hsize</p></td>
 <td><p>output</p></td>
 <td><p>[2:0]</p></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><p>o_ahb_hburst</p></td>
+<tr class="row-even"><td><p>o_ahb_hburst</p></td>
 <td><p>output</p></td>
 <td><p>[2:0]</p></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><p>o_ahb_hbusreq</p></td>
+<tr class="row-odd"><td><p>o_ahb_hbusreq</p></td>
 <td><p>output</p></td>
 <td><p>1</p></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><p>i_ahb_hgrant</p></td>
+<tr class="row-even"><td><p>i_ahb_hgrant</p></td>
 <td><p>input</p></td>
 <td><p>1</p></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><p>i_ahb_hready</p></td>
+<tr class="row-odd"><td><p>i_ahb_hready</p></td>
 <td><p>input</p></td>
 <td><p>1</p></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><p>i_ahb_hrdata</p></td>
+<tr class="row-even"><td><p>i_ahb_hrdata</p></td>
 <td><p>input</p></td>
 <td><p>[31:0]</p></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><p>i_ahb_hresp</p></td>
+<tr class="row-odd"><td><p>i_ahb_hresp</p></td>
 <td><p>input</p></td>
 <td><p>[1:0]</p></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td colspan="3"><p><strong>DFI V5.0</strong></p></td>
+<tr class="row-even"><td colspan="3"><p><strong>DFI V5.0</strong></p></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><p>i_dfi_clk_on</p></td>
+<tr class="row-odd"><td><p>i_dfi_clk_on</p></td>
 <td><p>input</p></td>
 <td><p>1</p></td>
 <td><p>DFI clock on request</p></td>
 </tr>
-<tr class="row-odd"><td><p>o_dfi_clk</p></td>
+<tr class="row-even"><td><p>o_dfi_clk</p></td>
 <td><p>output</p></td>
 <td><p>1</p></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><p>o_dfi_ctrlupd_ack</p></td>
+<tr class="row-odd"><td><p>o_dfi_ctrlupd_ack</p></td>
 <td><p>output</p></td>
 <td><p>1</p></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><p>i_dfi_ctrlupd_req</p></td>
+<tr class="row-even"><td><p>i_dfi_ctrlupd_req</p></td>
 <td><p>input</p></td>
 <td><p>1</p></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><p>i_dfi_phyupd_ack</p></td>
+<tr class="row-odd"><td><p>i_dfi_phyupd_ack</p></td>
 <td><p>input</p></td>
 <td><p>1</p></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><p>o_dfi_phyupd_req</p></td>
+<tr class="row-even"><td><p>o_dfi_phyupd_req</p></td>
 <td><p>output</p></td>
 <td><p>1</p></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><p>o_dfi_phyupd_type</p></td>
+<tr class="row-odd"><td><p>o_dfi_phyupd_type</p></td>
 <td><p>output</p></td>
 <td><p>[1:0]</p></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><p>i_dfi_freq_fsp</p></td>
+<tr class="row-even"><td><p>i_dfi_freq_fsp</p></td>
 <td><p>input</p></td>
 <td><p>[1:0]</p></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><p>i_dfi_freq_ratio</p></td>
+<tr class="row-odd"><td><p>i_dfi_freq_ratio</p></td>
 <td><p>input</p></td>
 <td><p>[1:0]</p></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><p>i_dfi_frequency</p></td>
+<tr class="row-even"><td><p>i_dfi_frequency</p></td>
 <td><p>input</p></td>
 <td><p>[4:0]</p></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><p>o_dfi_init_complete</p></td>
+<tr class="row-odd"><td><p>o_dfi_init_complete</p></td>
 <td><p>output</p></td>
 <td><p>1</p></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><p>i_dfi_init_start</p></td>
+<tr class="row-even"><td><p>i_dfi_init_start</p></td>
 <td><p>input</p></td>
 <td><p>1</p></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><p>i_dfi_phymstr_ack</p></td>
+<tr class="row-odd"><td><p>i_dfi_phymstr_ack</p></td>
 <td><p>input</p></td>
 <td><p>1</p></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><p>o_dfi_phymstr_cs_state</p></td>
+<tr class="row-even"><td><p>o_dfi_phymstr_cs_state</p></td>
 <td><p>output</p></td>
 <td><p>[1:0]</p></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><p>o_dfi_phymstr_req</p></td>
+<tr class="row-odd"><td><p>o_dfi_phymstr_req</p></td>
 <td><p>output</p></td>
 <td><p>1</p></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><p>o_dfi_phymstr_state_sel</p></td>
+<tr class="row-even"><td><p>o_dfi_phymstr_state_sel</p></td>
 <td><p>output</p></td>
 <td><p>1</p></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><p>o_dfi_phymstr_type</p></td>
+<tr class="row-odd"><td><p>o_dfi_phymstr_type</p></td>
 <td><p>output</p></td>
 <td><p>[1:0]</p></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><p>o_dfi_lp_ctrl_ack</p></td>
+<tr class="row-even"><td><p>o_dfi_lp_ctrl_ack</p></td>
 <td><p>output</p></td>
 <td><p>1</p></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><p>i_dfi_lp_ctrl_req</p></td>
+<tr class="row-odd"><td><p>i_dfi_lp_ctrl_req</p></td>
 <td><p>input</p></td>
 <td><p>1</p></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><p>i_dfi_lp_ctrl_wakeup</p></td>
+<tr class="row-even"><td><p>i_dfi_lp_ctrl_wakeup</p></td>
 <td><p>input</p></td>
 <td><p>[5:0]</p></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><p>o_dfi_lp_data_ack</p></td>
+<tr class="row-odd"><td><p>o_dfi_lp_data_ack</p></td>
 <td><p>output</p></td>
 <td><p>1</p></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><p>i_dfi_lp_data_req</p></td>
+<tr class="row-even"><td><p>i_dfi_lp_data_req</p></td>
 <td><p>input</p></td>
 <td><p>1</p></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><p>i_dfi_lp_data_wakeup</p></td>
+<tr class="row-odd"><td><p>i_dfi_lp_data_wakeup</p></td>
 <td><p>input</p></td>
 <td><p>[5:0]</p></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><p>i_dfi_reset_n_p0</p></td>
+<tr class="row-even"><td><p>i_dfi_reset_n_p0</p></td>
 <td><p>input</p></td>
 <td><p>1</p></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><p>i_dfi_reset_n_p1</p></td>
+<tr class="row-odd"><td><p>i_dfi_reset_n_p1</p></td>
 <td><p>input</p></td>
 <td><p>1</p></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><p>i_dfi_reset_n_p2</p></td>
+<tr class="row-even"><td><p>i_dfi_reset_n_p2</p></td>
 <td><p>input</p></td>
 <td><p>1</p></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><p>i_dfi_reset_n_p3</p></td>
+<tr class="row-odd"><td><p>i_dfi_reset_n_p3</p></td>
 <td><p>input</p></td>
 <td><p>1</p></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><p>i_dfi_address_p0</p></td>
+<tr class="row-even"><td><p>i_dfi_address_p0</p></td>
 <td><p>input</p></td>
 <td><p>[13:0]</p></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><p>i_dfi_address_p1</p></td>
+<tr class="row-odd"><td><p>i_dfi_address_p1</p></td>
 <td><p>input</p></td>
 <td><p>[13:0]</p></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><p>i_dfi_address_p2</p></td>
+<tr class="row-even"><td><p>i_dfi_address_p2</p></td>
 <td><p>input</p></td>
 <td><p>[13:0]</p></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><p>i_dfi_address_p3</p></td>
+<tr class="row-odd"><td><p>i_dfi_address_p3</p></td>
 <td><p>input</p></td>
 <td><p>[13:0]</p></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><p>i_dfi_cke_p0</p></td>
+<tr class="row-even"><td><p>i_dfi_cke_p0</p></td>
 <td><p>input</p></td>
 <td><p>[1:0]</p></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><p>i_dfi_cke_p1</p></td>
+<tr class="row-odd"><td><p>i_dfi_cke_p1</p></td>
 <td><p>input</p></td>
 <td><p>[1:0]</p></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><p>i_dfi_cke_p2</p></td>
+<tr class="row-even"><td><p>i_dfi_cke_p2</p></td>
 <td><p>input</p></td>
 <td><p>[1:0]</p></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><p>i_dfi_cke_p3</p></td>
+<tr class="row-odd"><td><p>i_dfi_cke_p3</p></td>
 <td><p>input</p></td>
 <td><p>[1:0]</p></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><p>i_dfi_cs_p0</p></td>
+<tr class="row-even"><td><p>i_dfi_cs_p0</p></td>
 <td><p>input</p></td>
 <td><p>[1:0]</p></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><p>i_dfi_cs_p1</p></td>
+<tr class="row-odd"><td><p>i_dfi_cs_p1</p></td>
 <td><p>input</p></td>
 <td><p>[1:0]</p></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><p>i_dfi_cs_p2</p></td>
+<tr class="row-even"><td><p>i_dfi_cs_p2</p></td>
 <td><p>input</p></td>
 <td><p>[1:0]</p></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><p>i_dfi_cs_p3</p></td>
+<tr class="row-odd"><td><p>i_dfi_cs_p3</p></td>
 <td><p>input</p></td>
 <td><p>[1:0]</p></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><p>i_dfi_dram_clk_disable_p0</p></td>
+<tr class="row-even"><td><p>i_dfi_dram_clk_disable_p0</p></td>
 <td><p>input</p></td>
 <td><p>1</p></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><p>i_dfi_dram_clk_disable_p1</p></td>
+<tr class="row-odd"><td><p>i_dfi_dram_clk_disable_p1</p></td>
 <td><p>input</p></td>
 <td><p>1</p></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><p>i_dfi_dram_clk_disable_p2</p></td>
+<tr class="row-even"><td><p>i_dfi_dram_clk_disable_p2</p></td>
 <td><p>input</p></td>
 <td><p>1</p></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><p>i_dfi_dram_clk_disable_p3</p></td>
+<tr class="row-odd"><td><p>i_dfi_dram_clk_disable_p3</p></td>
 <td><p>input</p></td>
 <td><p>1</p></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><p>i_dfi_wrdata_p0</p></td>
+<tr class="row-even"><td><p>i_dfi_wrdata_p0</p></td>
 <td><p>input</p></td>
 <td><p>[63:0]</p></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><p>i_dfi_wrdata_p1</p></td>
+<tr class="row-odd"><td><p>i_dfi_wrdata_p1</p></td>
 <td><p>input</p></td>
 <td><p>[63:0]</p></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><p>i_dfi_wrdata_p2</p></td>
+<tr class="row-even"><td><p>i_dfi_wrdata_p2</p></td>
 <td><p>input</p></td>
 <td><p>[63:0]</p></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><p>i_dfi_wrdata_p3</p></td>
+<tr class="row-odd"><td><p>i_dfi_wrdata_p3</p></td>
 <td><p>input</p></td>
 <td><p>[63:0]</p></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><p>i_dfi_parity_in_p0</p></td>
+<tr class="row-even"><td><p>i_dfi_parity_in_p0</p></td>
 <td><p>input</p></td>
 <td><p>1</p></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><p>i_dfi_parity_in_p1</p></td>
+<tr class="row-odd"><td><p>i_dfi_parity_in_p1</p></td>
 <td><p>input</p></td>
 <td><p>1</p></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><p>i_dfi_parity_in_p2</p></td>
+<tr class="row-even"><td><p>i_dfi_parity_in_p2</p></td>
 <td><p>input</p></td>
 <td><p>1</p></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><p>i_dfi_parity_in_p3</p></td>
+<tr class="row-odd"><td><p>i_dfi_parity_in_p3</p></td>
 <td><p>input</p></td>
 <td><p>1</p></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><p>i_dfi_wrdata_cs_p0</p></td>
+<tr class="row-even"><td><p>i_dfi_wrdata_cs_p0</p></td>
 <td><p>input</p></td>
 <td><p>[1:0]</p></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><p>i_dfi_wrdata_cs_p1</p></td>
+<tr class="row-odd"><td><p>i_dfi_wrdata_cs_p1</p></td>
 <td><p>input</p></td>
 <td><p>[1:0]</p></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><p>i_dfi_wrdata_cs_p2</p></td>
+<tr class="row-even"><td><p>i_dfi_wrdata_cs_p2</p></td>
 <td><p>input</p></td>
 <td><p>[1:0]</p></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><p>i_dfi_wrdata_cs_p3</p></td>
+<tr class="row-odd"><td><p>i_dfi_wrdata_cs_p3</p></td>
 <td><p>input</p></td>
 <td><p>[1:0]</p></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><p>i_dfi_wrdata_mask_p0</p></td>
+<tr class="row-even"><td><p>i_dfi_wrdata_mask_p0</p></td>
 <td><p>input</p></td>
 <td><p>[7:0]</p></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><p>i_dfi_wrdata_mask_p1</p></td>
+<tr class="row-odd"><td><p>i_dfi_wrdata_mask_p1</p></td>
 <td><p>input</p></td>
 <td><p>[7:0]</p></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><p>i_dfi_wrdata_mask_p2</p></td>
+<tr class="row-even"><td><p>i_dfi_wrdata_mask_p2</p></td>
 <td><p>input</p></td>
 <td><p>[7:0]</p></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><p>i_dfi_wrdata_mask_p3</p></td>
+<tr class="row-odd"><td><p>i_dfi_wrdata_mask_p3</p></td>
 <td><p>input</p></td>
 <td><p>[7:0]</p></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><p>i_dfi_wrdata_en_p0</p></td>
+<tr class="row-even"><td><p>i_dfi_wrdata_en_p0</p></td>
 <td><p>input</p></td>
 <td><p>1</p></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><p>i_dfi_wrdata_en_p1</p></td>
+<tr class="row-odd"><td><p>i_dfi_wrdata_en_p1</p></td>
 <td><p>input</p></td>
 <td><p>1</p></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><p>i_dfi_wrdata_en_p2</p></td>
+<tr class="row-even"><td><p>i_dfi_wrdata_en_p2</p></td>
 <td><p>input</p></td>
 <td><p>1</p></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><p>i_dfi_wrdata_en_p3</p></td>
+<tr class="row-odd"><td><p>i_dfi_wrdata_en_p3</p></td>
 <td><p>input</p></td>
 <td><p>1</p></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><p>i_dfi_wck_cs_p0</p></td>
+<tr class="row-even"><td><p>i_dfi_wck_cs_p0</p></td>
 <td><p>input</p></td>
 <td><p>[1:0]</p></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><p>i_dfi_wck_cs_p1</p></td>
+<tr class="row-odd"><td><p>i_dfi_wck_cs_p1</p></td>
 <td><p>input</p></td>
 <td><p>[1:0]</p></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><p>i_dfi_wck_cs_p2</p></td>
+<tr class="row-even"><td><p>i_dfi_wck_cs_p2</p></td>
 <td><p>input</p></td>
 <td><p>[1:0]</p></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><p>i_dfi_wck_cs_p3</p></td>
+<tr class="row-odd"><td><p>i_dfi_wck_cs_p3</p></td>
 <td><p>input</p></td>
 <td><p>[1:0]</p></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><p>i_dfi_wck_en_p0</p></td>
+<tr class="row-even"><td><p>i_dfi_wck_en_p0</p></td>
 <td><p>input</p></td>
 <td><p>1</p></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><p>i_dfi_wck_en_p1</p></td>
+<tr class="row-odd"><td><p>i_dfi_wck_en_p1</p></td>
 <td><p>input</p></td>
 <td><p>1</p></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><p>i_dfi_wck_en_p2</p></td>
+<tr class="row-even"><td><p>i_dfi_wck_en_p2</p></td>
 <td><p>input</p></td>
 <td><p>1</p></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><p>i_dfi_wck_en_p3</p></td>
+<tr class="row-odd"><td><p>i_dfi_wck_en_p3</p></td>
 <td><p>input</p></td>
 <td><p>1</p></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><p>i_dfi_wck_toggle_p0</p></td>
+<tr class="row-even"><td><p>i_dfi_wck_toggle_p0</p></td>
 <td><p>input</p></td>
 <td><p>[1:0]</p></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><p>i_dfi_wck_toggle_p1</p></td>
+<tr class="row-odd"><td><p>i_dfi_wck_toggle_p1</p></td>
 <td><p>input</p></td>
 <td><p>[1:0]</p></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><p>i_dfi_wck_toggle_p2</p></td>
+<tr class="row-even"><td><p>i_dfi_wck_toggle_p2</p></td>
 <td><p>input</p></td>
 <td><p>[1:0]</p></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><p>i_dfi_wck_toggle_p3</p></td>
+<tr class="row-odd"><td><p>i_dfi_wck_toggle_p3</p></td>
 <td><p>input</p></td>
 <td><p>[1:0]</p></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><p>i_dfi_rddata_cs_p0</p></td>
+<tr class="row-even"><td><p>i_dfi_rddata_cs_p0</p></td>
 <td><p>input</p></td>
 <td><p>[1:0]</p></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><p>i_dfi_rddata_cs_p1</p></td>
+<tr class="row-odd"><td><p>i_dfi_rddata_cs_p1</p></td>
 <td><p>input</p></td>
 <td><p>[1:0]</p></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><p>i_dfi_rddata_cs_p2</p></td>
+<tr class="row-even"><td><p>i_dfi_rddata_cs_p2</p></td>
 <td><p>input</p></td>
 <td><p>[1:0]</p></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><p>i_dfi_rddata_cs_p3</p></td>
+<tr class="row-odd"><td><p>i_dfi_rddata_cs_p3</p></td>
 <td><p>input</p></td>
 <td><p>[1:0]</p></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><p>i_dfi_rddata_en_p0</p></td>
+<tr class="row-even"><td><p>i_dfi_rddata_en_p0</p></td>
 <td><p>input</p></td>
 <td><p>1</p></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><p>i_dfi_rddata_en_p1</p></td>
+<tr class="row-odd"><td><p>i_dfi_rddata_en_p1</p></td>
 <td><p>input</p></td>
 <td><p>1</p></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><p>i_dfi_rddata_en_p2</p></td>
+<tr class="row-even"><td><p>i_dfi_rddata_en_p2</p></td>
 <td><p>input</p></td>
 <td><p>1</p></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><p>i_dfi_rddata_en_p3</p></td>
+<tr class="row-odd"><td><p>i_dfi_rddata_en_p3</p></td>
 <td><p>input</p></td>
 <td><p>1</p></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><p>o_dfi_rddata_dbi_w0</p></td>
+<tr class="row-even"><td><p>o_dfi_rddata_dbi_w0</p></td>
 <td><p>output</p></td>
 <td><p>[7:0]</p></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><p>o_dfi_rddata_dbi_w1</p></td>
+<tr class="row-odd"><td><p>o_dfi_rddata_dbi_w1</p></td>
 <td><p>output</p></td>
 <td><p>[7:0]</p></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><p>o_dfi_rddata_dbi_w2</p></td>
+<tr class="row-even"><td><p>o_dfi_rddata_dbi_w2</p></td>
 <td><p>output</p></td>
 <td><p>[7:0]</p></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><p>o_dfi_rddata_dbi_w3</p></td>
+<tr class="row-odd"><td><p>o_dfi_rddata_dbi_w3</p></td>
 <td><p>output</p></td>
 <td><p>[7:0]</p></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><p>o_dfi_rddata_w0</p></td>
+<tr class="row-even"><td><p>o_dfi_rddata_w0</p></td>
 <td><p>output</p></td>
 <td><p>[63:0]</p></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><p>o_dfi_rddata_w1</p></td>
+<tr class="row-odd"><td><p>o_dfi_rddata_w1</p></td>
 <td><p>output</p></td>
 <td><p>[63:0]</p></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><p>o_dfi_rddata_w2</p></td>
+<tr class="row-even"><td><p>o_dfi_rddata_w2</p></td>
 <td><p>output</p></td>
 <td><p>[63:0]</p></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><p>o_dfi_rddata_w3</p></td>
+<tr class="row-odd"><td><p>o_dfi_rddata_w3</p></td>
 <td><p>output</p></td>
 <td><p>[63:0]</p></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><p>o_dfi_rddata_valid_w0</p></td>
+<tr class="row-even"><td><p>o_dfi_rddata_valid_w0</p></td>
 <td><p>output</p></td>
 <td><p>1</p></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><p>o_dfi_rddata_valid_w1</p></td>
+<tr class="row-odd"><td><p>o_dfi_rddata_valid_w1</p></td>
 <td><p>output</p></td>
 <td><p>1</p></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><p>o_dfi_rddata_valid_w2</p></td>
+<tr class="row-even"><td><p>o_dfi_rddata_valid_w2</p></td>
 <td><p>output</p></td>
 <td><p>1</p></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><p>o_dfi_rddata_valid_w3</p></td>
+<tr class="row-odd"><td><p>o_dfi_rddata_valid_w3</p></td>
 <td><p>output</p></td>
 <td><p>1</p></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td colspan="3"><p><strong>LPDDR4x/LPDDR5</strong></p></td>
+<tr class="row-even"><td colspan="3"><p><strong>LPDDR4x/LPDDR5</strong></p></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><p>pad_ddr_rext</p></td>
+<tr class="row-odd"><td><p>pad_ddr_rext</p></td>
 <td><p>inout</p></td>
 <td><p>1</p></td>
 <td><p>Connect to 240 Ohm resistor</p></td>
 </tr>
-<tr class="row-odd"><td><p>pad_ddr_test</p></td>
+<tr class="row-even"><td><p>pad_ddr_test</p></td>
 <td><p>inout</p></td>
 <td><p>1</p></td>
 <td><p>High frequency test pad</p></td>
 </tr>
-<tr class="row-even"><td><p>pad_ddr_reset_n</p></td>
+<tr class="row-odd"><td><p>pad_ddr_reset_n</p></td>
 <td><p>inout</p></td>
 <td><p>1</p></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><p>pad_ch0_ddr_ca_ca0</p></td>
+<tr class="row-even"><td><p>pad_ch0_ddr_ca_ca0</p></td>
 <td><p>inout</p></td>
 <td><p>1</p></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><p>pad_ch0_ddr_ca_ca1</p></td>
+<tr class="row-odd"><td><p>pad_ch0_ddr_ca_ca1</p></td>
 <td><p>inout</p></td>
 <td><p>1</p></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><p>pad_ch0_ddr_ca_ca2</p></td>
+<tr class="row-even"><td><p>pad_ch0_ddr_ca_ca2</p></td>
 <td><p>inout</p></td>
 <td><p>1</p></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><p>pad_ch0_ddr_ca_ca3</p></td>
+<tr class="row-odd"><td><p>pad_ch0_ddr_ca_ca3</p></td>
 <td><p>inout</p></td>
 <td><p>1</p></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><p>pad_ch0_ddr_ca_ca4</p></td>
+<tr class="row-even"><td><p>pad_ch0_ddr_ca_ca4</p></td>
 <td><p>inout</p></td>
 <td><p>1</p></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><p>pad_ch0_ddr_ca_ca5</p></td>
+<tr class="row-odd"><td><p>pad_ch0_ddr_ca_ca5</p></td>
 <td><p>inout</p></td>
 <td><p>1</p></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><p>pad_ch0_ddr_ca_ca6</p></td>
+<tr class="row-even"><td><p>pad_ch0_ddr_ca_ca6</p></td>
 <td><p>inout</p></td>
 <td><p>1</p></td>
 <td><p>LPDDR5 only</p></td>
 </tr>
-<tr class="row-even"><td><p>pad_ch0_ddr_ca_cs0</p></td>
+<tr class="row-odd"><td><p>pad_ch0_ddr_ca_cs0</p></td>
 <td><p>inout</p></td>
 <td><p>1</p></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><p>pad_ch0_ddr_ca_cs1</p></td>
+<tr class="row-even"><td><p>pad_ch0_ddr_ca_cs1</p></td>
 <td><p>inout</p></td>
 <td><p>1</p></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><p>pad_ch0_ddr_ca_cke0</p></td>
+<tr class="row-odd"><td><p>pad_ch0_ddr_ca_cke0</p></td>
 <td><p>inout</p></td>
 <td><p>1</p></td>
 <td><p>LPDDR4x only</p></td>
 </tr>
-<tr class="row-odd"><td><p>pad_ch0_ddr_ca_cke1</p></td>
+<tr class="row-even"><td><p>pad_ch0_ddr_ca_cke1</p></td>
 <td><p>inout</p></td>
 <td><p>1</p></td>
 <td><p>LPDDR4x only</p></td>
 </tr>
-<tr class="row-even"><td><p>pad_ch0_ddr_ca_ck_c</p></td>
+<tr class="row-odd"><td><p>pad_ch0_ddr_ca_ck_c</p></td>
 <td><p>inout</p></td>
 <td><p>1</p></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><p>pad_ch0_ddr_ca_ck_t</p></td>
+<tr class="row-even"><td><p>pad_ch0_ddr_ca_ck_t</p></td>
 <td><p>inout</p></td>
 <td><p>1</p></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><p>pad_ch0_ddr_dq0_dbim</p></td>
+<tr class="row-odd"><td><p>pad_ch0_ddr_dq0_dbim</p></td>
 <td><p>inout</p></td>
 <td><p>1</p></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><p>pad_ch0_ddr_dq0_dq0</p></td>
+<tr class="row-even"><td><p>pad_ch0_ddr_dq0_dq0</p></td>
 <td><p>inout</p></td>
 <td><p>1</p></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><p>pad_ch0_ddr_dq0_dq1</p></td>
+<tr class="row-odd"><td><p>pad_ch0_ddr_dq0_dq1</p></td>
 <td><p>inout</p></td>
 <td><p>1</p></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><p>pad_ch0_ddr_dq0_dq2</p></td>
+<tr class="row-even"><td><p>pad_ch0_ddr_dq0_dq2</p></td>
 <td><p>inout</p></td>
 <td><p>1</p></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><p>pad_ch0_ddr_dq0_dq3</p></td>
+<tr class="row-odd"><td><p>pad_ch0_ddr_dq0_dq3</p></td>
 <td><p>inout</p></td>
 <td><p>1</p></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><p>pad_ch0_ddr_dq0_dq4</p></td>
+<tr class="row-even"><td><p>pad_ch0_ddr_dq0_dq4</p></td>
 <td><p>inout</p></td>
 <td><p>1</p></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><p>pad_ch0_ddr_dq0_dq5</p></td>
+<tr class="row-odd"><td><p>pad_ch0_ddr_dq0_dq5</p></td>
 <td><p>inout</p></td>
 <td><p>1</p></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><p>pad_ch0_ddr_dq0_dq6</p></td>
+<tr class="row-even"><td><p>pad_ch0_ddr_dq0_dq6</p></td>
 <td><p>inout</p></td>
 <td><p>1</p></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><p>pad_ch0_ddr_dq0_dq7</p></td>
+<tr class="row-odd"><td><p>pad_ch0_ddr_dq0_dq7</p></td>
 <td><p>inout</p></td>
 <td><p>1</p></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><p>pad_ch0_ddr_dq0_wck_c</p></td>
+<tr class="row-even"><td><p>pad_ch0_ddr_dq0_wck_c</p></td>
 <td><p>inout</p></td>
 <td><p>1</p></td>
 <td><p>LPDDR5 only</p></td>
 </tr>
-<tr class="row-even"><td><p>pad_ch0_ddr_dq0_wck_t</p></td>
+<tr class="row-odd"><td><p>pad_ch0_ddr_dq0_wck_t</p></td>
 <td><p>inout</p></td>
 <td><p>1</p></td>
 <td><p>LPDDR5 only</p></td>
 </tr>
-<tr class="row-odd"><td><p>pad_ch0_ddr_dq0_dqs_c</p></td>
+<tr class="row-even"><td><p>pad_ch0_ddr_dq0_dqs_c</p></td>
 <td><p>inout</p></td>
 <td><p>1</p></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><p>pad_ch0_ddr_dq0_dqs_t</p></td>
+<tr class="row-odd"><td><p>pad_ch0_ddr_dq0_dqs_t</p></td>
 <td><p>inout</p></td>
 <td><p>1</p></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><p>pad_ch0_ddr_dq1_dbim</p></td>
+<tr class="row-even"><td><p>pad_ch0_ddr_dq1_dbim</p></td>
 <td><p>inout</p></td>
 <td><p>1</p></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><p>pad_ch0_ddr_dq1_dq0</p></td>
+<tr class="row-odd"><td><p>pad_ch0_ddr_dq1_dq0</p></td>
 <td><p>inout</p></td>
 <td><p>1</p></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><p>pad_ch0_ddr_dq1_dq1</p></td>
+<tr class="row-even"><td><p>pad_ch0_ddr_dq1_dq1</p></td>
 <td><p>inout</p></td>
 <td><p>1</p></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><p>pad_ch0_ddr_dq1_dq2</p></td>
+<tr class="row-odd"><td><p>pad_ch0_ddr_dq1_dq2</p></td>
 <td><p>inout</p></td>
 <td><p>1</p></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><p>pad_ch0_ddr_dq1_dq3</p></td>
+<tr class="row-even"><td><p>pad_ch0_ddr_dq1_dq3</p></td>
 <td><p>inout</p></td>
 <td><p>1</p></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><p>pad_ch0_ddr_dq1_dq4</p></td>
+<tr class="row-odd"><td><p>pad_ch0_ddr_dq1_dq4</p></td>
 <td><p>inout</p></td>
 <td><p>1</p></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><p>pad_ch0_ddr_dq1_dq5</p></td>
+<tr class="row-even"><td><p>pad_ch0_ddr_dq1_dq5</p></td>
 <td><p>inout</p></td>
 <td><p>1</p></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><p>pad_ch0_ddr_dq1_dq6</p></td>
+<tr class="row-odd"><td><p>pad_ch0_ddr_dq1_dq6</p></td>
 <td><p>inout</p></td>
 <td><p>1</p></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><p>pad_ch0_ddr_dq1_dq7</p></td>
+<tr class="row-even"><td><p>pad_ch0_ddr_dq1_dq7</p></td>
 <td><p>inout</p></td>
 <td><p>1</p></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><p>pad_ch0_ddr_dq1_wck_c</p></td>
+<tr class="row-odd"><td><p>pad_ch0_ddr_dq1_wck_c</p></td>
 <td><p>inout</p></td>
 <td><p>1</p></td>
 <td><p>LPDDR5 only</p></td>
 </tr>
-<tr class="row-odd"><td><p>pad_ch0_ddr_dq1_wck_t</p></td>
+<tr class="row-even"><td><p>pad_ch0_ddr_dq1_wck_t</p></td>
 <td><p>inout</p></td>
 <td><p>1</p></td>
 <td><p>LPDDR5 only</p></td>
 </tr>
-<tr class="row-even"><td><p>pad_ch0_ddr_dq1_dqs_c</p></td>
+<tr class="row-odd"><td><p>pad_ch0_ddr_dq1_dqs_c</p></td>
 <td><p>inout</p></td>
 <td><p>1</p></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><p>pad_ch0_ddr_dq1_dqs_t</p></td>
+<tr class="row-even"><td><p>pad_ch0_ddr_dq1_dqs_t</p></td>
 <td><p>inout</p></td>
 <td><p>1</p></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><p>pad_ch1_ddr_ca_ca0</p></td>
+<tr class="row-odd"><td><p>pad_ch1_ddr_ca_ca0</p></td>
 <td><p>inout</p></td>
 <td><p>1</p></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><p>pad_ch1_ddr_ca_ca1</p></td>
+<tr class="row-even"><td><p>pad_ch1_ddr_ca_ca1</p></td>
 <td><p>inout</p></td>
 <td><p>1</p></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><p>pad_ch1_ddr_ca_ca2</p></td>
+<tr class="row-odd"><td><p>pad_ch1_ddr_ca_ca2</p></td>
 <td><p>inout</p></td>
 <td><p>1</p></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><p>pad_ch1_ddr_ca_ca3</p></td>
+<tr class="row-even"><td><p>pad_ch1_ddr_ca_ca3</p></td>
 <td><p>inout</p></td>
 <td><p>1</p></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><p>pad_ch1_ddr_ca_ca4</p></td>
+<tr class="row-odd"><td><p>pad_ch1_ddr_ca_ca4</p></td>
 <td><p>inout</p></td>
 <td><p>1</p></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><p>pad_ch1_ddr_ca_ca5</p></td>
+<tr class="row-even"><td><p>pad_ch1_ddr_ca_ca5</p></td>
 <td><p>inout</p></td>
 <td><p>1</p></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><p>pad_ch1_ddr_ca_ca6</p></td>
+<tr class="row-odd"><td><p>pad_ch1_ddr_ca_ca6</p></td>
 <td><p>inout</p></td>
 <td><p>1</p></td>
 <td><p>LPDDR5 only</p></td>
 </tr>
-<tr class="row-odd"><td><p>pad_ch1_ddr_ca_cs0</p></td>
+<tr class="row-even"><td><p>pad_ch1_ddr_ca_cs0</p></td>
 <td><p>inout</p></td>
 <td><p>1</p></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><p>pad_ch1_ddr_ca_cs1</p></td>
+<tr class="row-odd"><td><p>pad_ch1_ddr_ca_cs1</p></td>
 <td><p>inout</p></td>
 <td><p>1</p></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><p>pad_ch1_ddr_ca_cke0</p></td>
+<tr class="row-even"><td><p>pad_ch1_ddr_ca_cke0</p></td>
 <td><p>inout</p></td>
 <td><p>1</p></td>
 <td><p>LPDDR4x only</p></td>
 </tr>
-<tr class="row-even"><td><p>pad_ch1_ddr_ca_cke1</p></td>
+<tr class="row-odd"><td><p>pad_ch1_ddr_ca_cke1</p></td>
 <td><p>inout</p></td>
 <td><p>1</p></td>
 <td><p>LPDDR4x only</p></td>
 </tr>
-<tr class="row-odd"><td><p>pad_ch1_ddr_ca_ck_c</p></td>
+<tr class="row-even"><td><p>pad_ch1_ddr_ca_ck_c</p></td>
 <td><p>inout</p></td>
 <td><p>1</p></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><p>pad_ch1_ddr_ca_ck_t</p></td>
+<tr class="row-odd"><td><p>pad_ch1_ddr_ca_ck_t</p></td>
 <td><p>inout</p></td>
 <td><p>1</p></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><p>pad_ch1_ddr_dq0_dbim</p></td>
+<tr class="row-even"><td><p>pad_ch1_ddr_dq0_dbim</p></td>
 <td><p>inout</p></td>
 <td><p>1</p></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><p>pad_ch1_ddr_dq0_dq0</p></td>
+<tr class="row-odd"><td><p>pad_ch1_ddr_dq0_dq0</p></td>
 <td><p>inout</p></td>
 <td><p>1</p></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><p>pad_ch1_ddr_dq0_dq1</p></td>
+<tr class="row-even"><td><p>pad_ch1_ddr_dq0_dq1</p></td>
 <td><p>inout</p></td>
 <td><p>1</p></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><p>pad_ch1_ddr_dq0_dq2</p></td>
+<tr class="row-odd"><td><p>pad_ch1_ddr_dq0_dq2</p></td>
 <td><p>inout</p></td>
 <td><p>1</p></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><p>pad_ch1_ddr_dq0_dq3</p></td>
+<tr class="row-even"><td><p>pad_ch1_ddr_dq0_dq3</p></td>
 <td><p>inout</p></td>
 <td><p>1</p></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><p>pad_ch1_ddr_dq0_dq4</p></td>
+<tr class="row-odd"><td><p>pad_ch1_ddr_dq0_dq4</p></td>
 <td><p>inout</p></td>
 <td><p>1</p></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><p>pad_ch1_ddr_dq0_dq5</p></td>
+<tr class="row-even"><td><p>pad_ch1_ddr_dq0_dq5</p></td>
 <td><p>inout</p></td>
 <td><p>1</p></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><p>pad_ch1_ddr_dq0_dq6</p></td>
+<tr class="row-odd"><td><p>pad_ch1_ddr_dq0_dq6</p></td>
 <td><p>inout</p></td>
 <td><p>1</p></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><p>pad_ch1_ddr_dq0_dq7</p></td>
+<tr class="row-even"><td><p>pad_ch1_ddr_dq0_dq7</p></td>
 <td><p>inout</p></td>
 <td><p>1</p></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><p>pad_ch1_ddr_dq0_wck_c</p></td>
+<tr class="row-odd"><td><p>pad_ch1_ddr_dq0_wck_c</p></td>
 <td><p>inout</p></td>
 <td><p>1</p></td>
 <td><p>LPDDR5 only</p></td>
 </tr>
-<tr class="row-odd"><td><p>pad_ch1_ddr_dq0_wck_t</p></td>
+<tr class="row-even"><td><p>pad_ch1_ddr_dq0_wck_t</p></td>
 <td><p>inout</p></td>
 <td><p>1</p></td>
 <td><p>LPDDR5 only</p></td>
 </tr>
-<tr class="row-even"><td><p>pad_ch1_ddr_dq0_dqs_c</p></td>
+<tr class="row-odd"><td><p>pad_ch1_ddr_dq0_dqs_c</p></td>
 <td><p>inout</p></td>
 <td><p>1</p></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><p>pad_ch1_ddr_dq0_dqs_t</p></td>
+<tr class="row-even"><td><p>pad_ch1_ddr_dq0_dqs_t</p></td>
 <td><p>inout</p></td>
 <td><p>1</p></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><p>pad_ch1_ddr_dq1_dbim</p></td>
+<tr class="row-odd"><td><p>pad_ch1_ddr_dq1_dbim</p></td>
 <td><p>inout</p></td>
 <td><p>1</p></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><p>pad_ch1_ddr_dq1_dq0</p></td>
+<tr class="row-even"><td><p>pad_ch1_ddr_dq1_dq0</p></td>
 <td><p>inout</p></td>
 <td><p>1</p></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><p>pad_ch1_ddr_dq1_dq1</p></td>
+<tr class="row-odd"><td><p>pad_ch1_ddr_dq1_dq1</p></td>
 <td><p>inout</p></td>
 <td><p>1</p></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><p>pad_ch1_ddr_dq1_dq2</p></td>
+<tr class="row-even"><td><p>pad_ch1_ddr_dq1_dq2</p></td>
 <td><p>inout</p></td>
 <td><p>1</p></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><p>pad_ch1_ddr_dq1_dq3</p></td>
+<tr class="row-odd"><td><p>pad_ch1_ddr_dq1_dq3</p></td>
 <td><p>inout</p></td>
 <td><p>1</p></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><p>pad_ch1_ddr_dq1_dq4</p></td>
+<tr class="row-even"><td><p>pad_ch1_ddr_dq1_dq4</p></td>
 <td><p>inout</p></td>
 <td><p>1</p></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><p>pad_ch1_ddr_dq1_dq5</p></td>
+<tr class="row-odd"><td><p>pad_ch1_ddr_dq1_dq5</p></td>
 <td><p>inout</p></td>
 <td><p>1</p></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><p>pad_ch1_ddr_dq1_dq6</p></td>
+<tr class="row-even"><td><p>pad_ch1_ddr_dq1_dq6</p></td>
 <td><p>inout</p></td>
 <td><p>1</p></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><p>pad_ch1_ddr_dq1_dq7</p></td>
+<tr class="row-odd"><td><p>pad_ch1_ddr_dq1_dq7</p></td>
 <td><p>inout</p></td>
 <td><p>1</p></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><p>pad_ch1_ddr_dq1_wck_c</p></td>
+<tr class="row-even"><td><p>pad_ch1_ddr_dq1_wck_c</p></td>
 <td><p>inout</p></td>
 <td><p>1</p></td>
 <td><p>LPDDR5 only</p></td>
 </tr>
-<tr class="row-even"><td><p>pad_ch1_ddr_dq1_wck_t</p></td>
+<tr class="row-odd"><td><p>pad_ch1_ddr_dq1_wck_t</p></td>
 <td><p>inout</p></td>
 <td><p>1</p></td>
 <td><p>LPDDR5 only</p></td>
 </tr>
-<tr class="row-odd"><td><p>pad_ch1_ddr_dq1_dqs_c</p></td>
+<tr class="row-even"><td><p>pad_ch1_ddr_dq1_dqs_c</p></td>
 <td><p>inout</p></td>
 <td><p>1</p></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><p>pad_ch1_ddr_dq1_dqs_t</p></td>
+<tr class="row-odd"><td><p>pad_ch1_ddr_dq1_dqs_t</p></td>
 <td><p>inout</p></td>
 <td><p>1</p></td>
 <td></td>
@@ -1610,6 +1628,76 @@
 <div class="section" id="lpddr5-interface">
 <h3>LPDDR5 Interface<a class="headerlink" href="#lpddr5-interface" title="Permalink to this headline">¶</a></h3>
 <p>The LPDDR5 compliant interface supports up to two 1x16 channels and two ranks. The DDR PHY does not support the ODT output pin. DRAM termination shall be set through MRW.</p>
+</div>
+</div>
+<div class="section" id="technology">
+<h2>Technology<a class="headerlink" href="#technology" title="Permalink to this headline">¶</a></h2>
+<p>The Wavious DDR PHY has been initially developed in the GF12LPP process. Although the DDR PHY is highly digital in nature (e.g. no bandgaps) to improve portability to various foundries and process nodes, the DRAM protocol high transfer rates and varying channel characteristics require high performance mixed-signal and analog PHY circuits. The Wavious DDR PHY design includes various wrappers to ease standard cell migration and analog models for simulations. To port the DDR PHY to other process nodes, designers must perform two tasks. Firstly, designers must incorporate process-specific standard cells into the technology wrappers. Secondly, designers must create analog and mixed-signal schematics/layout which implement high performance circuits. The sections below describe the specific wrappers and models that can be leveraged to support DDR PHY process technology porting.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p>Datasheets for mixed-signal and analog circuits will be included in future releases.</p></li>
+</ul>
+</div>
+<div class="section" id="rtl-tech">
+<h3>rtl/tech<a class="headerlink" href="#rtl-tech" title="Permalink to this headline">¶</a></h3>
+<p>This directory includes standard cell wrappers. The DDR PHY design uses these wrappers exclusively to maximize code reuse. Designers should map technology specific cells into these wrappers.</p>
+<ul class="simple">
+<li><p><strong>ddr_custom_lib.sv</strong>   - DDR cells for high performance datapath</p></li>
+<li><p><strong>ddr_stdcell_lib.sv</strong>  - DDR cells for physical design (may be the same as wav_stdcell_lib cells depending on performance requirements)</p></li>
+<li><p><strong>wav_stdcell_lib.sv</strong>  - General cells for physical design</p></li>
+<li><p><strong>wav_tcm_sp.sv</strong>       - Single port SRAM for tightly coupled memory</p></li>
+</ul>
+</div>
+<div class="section" id="rtl-custom-ip">
+<h3>rtl/custom_ip<a class="headerlink" href="#rtl-custom-ip" title="Permalink to this headline">¶</a></h3>
+<p>This directory includes high performance mixed-signal circuit models that are used in various contexts within the DDR PHY. Designers must create process-specific mixed-signal schematics/layout for these circuits.</p>
+<ul class="simple">
+<li><p><strong>wphy_2to1_14g_rvt.sv</strong>                 - Differential 2:1 serializer</p></li>
+<li><p><strong>wphy_cgc_diff_lvt.sv</strong>                 - Differential clock gating cell (rest low)</p></li>
+<li><p><strong>wphy_cgc_diff_svt.sv</strong>                 - Differential clock gating cell (rest low)</p></li>
+<li><p><strong>wphy_cgc_diff_rh_lvt.sv</strong>              - Differential clock gating cell (rest high)</p></li>
+<li><p><strong>wphy_cgc_diff_rh_svt.sv</strong>              - Differential clock gating cell (rest high)</p></li>
+<li><p><strong>wphy_clk_div_2ph_4g_dlymatch_lvt.sv</strong>  - 2 phase clock divider delay match</p></li>
+<li><p><strong>wphy_clk_div_2ph_4g_dlymatch_svt.sv</strong>  - 2 phase clock divider delay match</p></li>
+<li><p><strong>wphy_clk_div_2ph_4g_lvt.sv</strong>           - 2 phase clock divider</p></li>
+<li><p><strong>wphy_clk_div_2ph_4g_svt.sv</strong>           - 2 phase clock divider</p></li>
+<li><p><strong>wphy_clk_div_4ph_10g_dlymatch_svt.sv</strong> - 4 phase clock divider delay match</p></li>
+<li><p><strong>wphy_clk_div_4ph_10g_svt.sv</strong>          - 4 phase clock divider</p></li>
+<li><p><strong>wphy_clkmux_3to1_diff.sv</strong>             - Differential 3:1 clock mux</p></li>
+<li><p><strong>wphy_clkmux_3to1_diff_slvt.sv</strong>        - Differential 3:1 clock mux (low latency)</p></li>
+<li><p><strong>wphy_clkmux_diff.sv</strong>                  - Differential 2:1 clock mux</p></li>
+<li><p><strong>wphy_gfcm_lvt.sv</strong>                     - Glitch free clock mux</p></li>
+<li><p><strong>wphy_gfcm_svt.sv</strong>                     - Glitch free clock mux</p></li>
+<li><p><strong>wphy_pi_4g.sv</strong>                        - Phase interpolator</p></li>
+<li><p><strong>wphy_pi_dly_match_4g.sv</strong>              - Phase interpolator delay match</p></li>
+<li><p><strong>wphy_prog_dly_se_4g.sv</strong>               - Programmable delay</p></li>
+<li><p><strong>wphy_prog_dly_se_4g_small.sv</strong>         - Programmable delay (low latency)</p></li>
+<li><p><strong>wphy_sa_4g_2ph_pdly_no_esd.sv</strong>        - Sense amplifier without ESD</p></li>
+</ul>
+</div>
+<div class="section" id="rtl-ddr-ip">
+<h3>rtl/ddr_ip<a class="headerlink" href="#rtl-ddr-ip" title="Permalink to this headline">¶</a></h3>
+<p>This directory includes DDR PHY specific analog and mixed-signal components including IO pad models. Designers must create process-specific analog and mixed-signal schematics/layout for these circuits.</p>
+<ul class="simple">
+<li><p><strong>wphy_lp4x5_cmn.sv</strong>                    - Common clock</p></li>
+<li><p><strong>wphy_lp4x5_cmn_clks_svt.sv</strong>           - Common clock driver</p></li>
+<li><p><strong>wphy_lp4x5_cke_drvr_w_lpbk.sv</strong>        - CKE pad driver</p></li>
+<li><p><strong>wphy_lp4x5_dq_drvr_w_lpbk.sv</strong>         - DQ pad driver with loopback and ESD</p></li>
+<li><p><strong>wphy_lp4x5_dqs_drvr_w_lpbk.sv</strong>        - DQS pad driver with loopback and ESD</p></li>
+<li><p><strong>wphy_lp4x5_dqs_rcvr_no_esd.sv</strong>        - DQS pad receiver without ESD</p></li>
+</ul>
+</div>
+<div class="section" id="rtl-mvppll-ip">
+<h3>rtl/mvppll_ip<a class="headerlink" href="#rtl-mvppll-ip" title="Permalink to this headline">¶</a></h3>
+<p>This directory includes the multi-VCO PLL analog model. Designers must create process-specific analog and mixed-signal schematics/layout for these circuits.</p>
+<ul class="simple">
+<li><p><strong>wphy_rpll_mvp_4g.sv</strong>                  - Multi-VCO PLL</p></li>
+</ul>
+</div>
+<div class="section" id="rtl-wddr">
+<h3>rtl/wddr<a class="headerlink" href="#rtl-wddr" title="Permalink to this headline">¶</a></h3>
+<p>This directory includes the DDR PHY foundation digital control and datapath circuits. All blocks within this directory can be synthesized to a target technology assuming that standard cell wrappers have been updated appropriately. The Wavious DDR PHY is highly configurable and uses a common slice-based design methodology that is leveraged for DQ, DQS, CA, CK, CS, CKE, DBI, DM, etc. functional slices. Depending on design constraints (schedules, area, power, performance, etc), designers can implement the DDR PHY datapath in a physical design flow or a custom layout flow. The implementation methodology will have implications for tool flows, timing closure, signoff, etc. that should be carefully considered.</p>
 </div>
 </div>
 </div>

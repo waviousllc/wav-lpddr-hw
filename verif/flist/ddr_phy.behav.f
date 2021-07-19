@@ -26,6 +26,7 @@ ${RTL}/custom_ip/wphy_clk_div_2ph_4g_lvt.sv
 ${RTL}/custom_ip/wphy_clk_div_2ph_4g_svt.sv
 ${RTL}/custom_ip/wphy_clk_div_4ph_10g_svt.sv
 ${RTL}/custom_ip/wphy_clkmux_3to1_diff.sv
+${RTL}/custom_ip/wphy_clkmux_3to1_diff_slvt.sv
 ${RTL}/custom_ip/wphy_gfcm_lvt.sv
 ${RTL}/custom_ip/wphy_gfcm_svt.sv
 ${RTL}/custom_ip/wphy_clkmux_diff.sv
