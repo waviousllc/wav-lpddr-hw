@@ -11,8 +11,8 @@ compliant interface.
 
 Features
 ++++++++
-* LPDDR4x @4266 Gbps
-* LPDDR5 @6400 Gbps
+* LPDDR4x @4266 Mbps
+* LPDDR5 @6400 Mbps
 * Dual rank support
 * DFI5.0 compliant Memory Controller interface
 * Integrated MicroController Unit (MCU) with embedded SRAM
